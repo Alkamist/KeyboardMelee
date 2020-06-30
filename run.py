@@ -5,26 +5,29 @@ from game_controller import GameController
 from state import State
 from button_axis import ButtonAxis
 from jump_manager import JumpManager
+from shield_tilt_manager import ShieldTiltManager
 from waveland_angle_manager import WavelandAngleManager
+from modifier_angle_manager import ModifierAngleManager
+from safe_grounded_down_b_manager import SafeGroundedDownBManager
 
 
-binds = {
+key_binds = {
     "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
-    "x_mod" : "shift",
-    "y_mod" : "alt",
+    "mod1" : "caps lock",
+    "mod2" : "alt",
 
     "c_up" : "p",
-    "c_down" : "l",
+    "c_down" : "right windows",
     "c_right" : "/",
-    "c_left" : ".",
+    "c_left" : "l",
 
-    "d_up" : "g",
-    "d_down" : "b",
-    "d_right" : "h",
-    "d_left" : "v",
+    "d_up" : "1",
+    "d_down" : "2",
+    "d_right" : "3",
+    "d_left" : "4",
 
     "short_hop" : "[",
     "full_hop" : "\\",
@@ -38,10 +41,10 @@ binds = {
 
     "start" : "5",
 }
-binds_reversed = dict((v, k) for k, v in binds.items())
+binds_reversed = dict((v, k) for k, v in key_binds.items())
 
 buttons = {}
-for name in binds:
+for name in key_binds:
     buttons[name] = State()
 
 base_keys = {
@@ -89,7 +92,7 @@ def on_release_key(key):
         bind_name = binds_reversed[key_name]
         buttons[bind_name].is_active = False
 
-for bind_name, bind_value in binds.items():
+for bind_name, bind_value in key_binds.items():
     keyboard.on_press_key(keyboard.parse_hotkey(bind_value), on_press_key, True)
     keyboard.on_release_key(keyboard.parse_hotkey(bind_value), on_release_key, True)
 
@@ -97,7 +100,10 @@ for bind_name, bind_value in binds.items():
 controller = GameController(1)
 
 jump_manager = JumpManager()
+shield_tilt_manager = ShieldTiltManager()
 waveland_angle_manager = WavelandAngleManager()
+modifier_angle_manager = ModifierAngleManager()
+safe_grounded_down_b_manager = SafeGroundedDownBManager()
 ls_x_raw = ButtonAxis()
 ls_y_raw = ButtonAxis()
 c_x_raw = ButtonAxis()
@@ -122,17 +128,48 @@ while True:
         full_hop=buttons["full_hop"].is_active,
     )
 
+    safe_grounded_down_b_manager.update(
+        b=buttons["b"].is_active,
+        down=buttons["down"].is_active,
+        up=buttons["up"].is_active,
+        x_axis_value=ls_x_out,
+        y_axis_value=ls_y_out,
+    )
+    ls_x_out = safe_grounded_down_b_manager.x_value
+    ls_y_out = safe_grounded_down_b_manager.y_value
+
+    modifier_angle_manager.update(
+        mod1=buttons["mod1"].is_active,
+        mod2=buttons["mod2"].is_active,
+        x_axis_value=ls_x_out,
+        y_axis_value=ls_y_out,
+    )
+    ls_x_out = modifier_angle_manager.x_value
+    ls_y_out = modifier_angle_manager.y_value
+
     waveland_angle_manager.update(
         air_dodge=buttons["air_dodge"].is_active,
         left=buttons["left"].is_active,
         right=buttons["right"].is_active,
         down=buttons["down"].is_active,
-        x_axis_value=ls_x_raw.value,
-        y_axis_value=ls_y_raw.value,
+        x_axis_value=ls_x_out,
+        y_axis_value=ls_y_out,
     )
-    if waveland_angle_manager.is_wavelanding:
-        ls_x_out = waveland_angle_manager.x_value
-        ls_y_out = waveland_angle_manager.y_value
+    ls_x_out = waveland_angle_manager.x_value
+    ls_y_out = waveland_angle_manager.y_value
+
+    shield_tilt_manager.update(
+        shield=buttons["shield"].is_active,
+        air_dodge=buttons["air_dodge"].is_active,
+        left=buttons["left"].is_active,
+        right=buttons["right"].is_active,
+        down=buttons["down"].is_active,
+        mod1=buttons["mod1"].is_active,
+        x_axis_value=ls_x_out,
+        y_axis_value=ls_y_out,
+    )
+    ls_x_out = shield_tilt_manager.x_value
+    ls_y_out = shield_tilt_manager.y_value
 
     controller.a = buttons["a"].is_active
     controller.b = buttons["b"].is_active

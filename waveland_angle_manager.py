@@ -1,6 +1,7 @@
 import time
 
 from state import State
+from normalize import normalize
 
 
 class WavelandAngleManager(object):
@@ -29,7 +30,7 @@ class WavelandAngleManager(object):
         if self.is_wavelanding and not down:
             if time.perf_counter() - self.waveland_time < 0.025:
                 if waveland_sideways:
-                    self.x_value = x_axis_value * self.x_level
+                    self.x_value = normalize(x_axis_value) * self.x_level
                     self.y_value = self.y_level
 
                 else:
