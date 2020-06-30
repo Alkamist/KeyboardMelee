@@ -11,6 +11,7 @@ from modifier_angle_manager import ModifierAngleManager
 from safe_grounded_down_b_manager import SafeGroundedDownBManager
 from backdash_out_of_crouch_fixer import BackdashOutOfCrouchFixer
 from angled_smasher import AngledSmasher
+from shield_manager import ShieldManager
 
 
 key_binds = {
@@ -39,6 +40,7 @@ key_binds = {
     "z" : "]",
 
     "shield" : "space",
+    "light_shield" : "-",
     "air_dodge" : "right alt",
 
     "start" : "5",
@@ -108,6 +110,7 @@ modifier_angle_manager = ModifierAngleManager()
 safe_grounded_down_b_manager = SafeGroundedDownBManager()
 backdash_out_of_crouch_fixer = BackdashOutOfCrouchFixer()
 angled_smasher = AngledSmasher()
+shield_manager = ShieldManager()
 ls_x_raw = ButtonAxis()
 ls_y_raw = ButtonAxis()
 c_x_raw = ButtonAxis()
@@ -131,6 +134,11 @@ while True:
     jump_manager.update(
         short_hop=buttons["short_hop"].is_active,
         full_hop=buttons["full_hop"].is_active,
+    )
+
+    shield_manager.update(
+        light_shield=buttons["light_shield"].is_active,
+        shield=buttons["shield"].is_active,
     )
 
     angled_smasher.update(
@@ -201,7 +209,7 @@ while True:
     controller.x = jump_manager.full_hop_value
     controller.y = jump_manager.short_hop_value
     controller.z = buttons["z"].is_active
-    controller.l = buttons["shield"].is_active
+    controller.l = shield_manager.shield_value
     controller.r = buttons["air_dodge"].is_active
     controller.start = buttons["start"].is_active
     controller.d_left = buttons["d_left"].is_active
@@ -212,8 +220,7 @@ while True:
     controller.ls_y = ls_y_out
     controller.c_x = c_x_raw.value
     controller.c_y = c_y_out
-    #controller.l_analog = 0.0
-    #controller.r_analog = 0.0
+    controller.l_analog = shield_manager.light_shield_value
 
     controller.send_outputs()
 
