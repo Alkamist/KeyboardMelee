@@ -73,6 +73,8 @@ class GameController(object):
             #"r_analog" : 0.0,
         }
 
+        self.send_outputs()
+
     def send_outputs(self):
         for output_name, output in self.outputs.items():
             output.value = getattr(self, output_name)

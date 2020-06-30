@@ -1,6 +1,6 @@
 import time
 
-from pynput import keyboard
+import keyboard
 from game_controller import GameController
 from state import State
 from button_axis import ButtonAxis
@@ -9,53 +9,89 @@ from waveland_angle_manager import WavelandAngleManager
 
 
 binds = {
-    "up" : keyboard.KeyCode.from_char("w"),
-    "down" : keyboard.KeyCode.from_char("s"),
-    "right" : keyboard.KeyCode.from_char("d"),
-    "left" : keyboard.KeyCode.from_char("a"),
-    "x_mod" : keyboard.Key.shift_l,
-    "y_mod" : keyboard.Key.alt_l,
+    "up" : "w",
+    "down" : "s",
+    "right" : "d",
+    "left" : "a",
+    "x_mod" : "shift",
+    "y_mod" : "alt",
 
-    "c_up" : keyboard.KeyCode.from_char("p"),
-    "c_down" : keyboard.KeyCode.from_char("."),
-    "c_right" : keyboard.KeyCode.from_char("/"),
-    "c_left" : keyboard.KeyCode.from_char(","),
+    "c_up" : "p",
+    "c_down" : "l",
+    "c_right" : "/",
+    "c_left" : ".",
 
-    "d_up" : keyboard.KeyCode.from_char("g"),
-    "d_down" : keyboard.KeyCode.from_char("b"),
-    "d_right" : keyboard.KeyCode.from_char("h"),
-    "d_left" : keyboard.KeyCode.from_char("v"),
+    "d_up" : "g",
+    "d_down" : "b",
+    "d_right" : "h",
+    "d_left" : "v",
 
-    "short_hop" : keyboard.KeyCode.from_char("["),
-    "full_hop" : keyboard.KeyCode.from_char("\\"),
+    "short_hop" : "[",
+    "full_hop" : "\\",
 
-    "a" : keyboard.KeyCode.from_char("'"),
-    "b" : keyboard.KeyCode.from_char(";"),
-    "z" : keyboard.KeyCode.from_char("]"),
+    "a" : "'",
+    "b" : ";",
+    "z" : "]",
 
-    "shield" : keyboard.Key.space,
-    "air_dodge" : keyboard.Key.alt_r,
+    "shield" : "space",
+    "air_dodge" : "right alt",
 
-    "start" : keyboard.KeyCode.from_char("5"),
+    "start" : "5",
 }
+binds_reversed = dict((v, k) for k, v in binds.items())
 
 buttons = {}
 for name in binds:
     buttons[name] = State()
 
+base_keys = {
+    "!" : "1",
+    "@" : "2",
+    "#" : "3",
+    "$" : "4",
+    "%" : "5",
+    "^" : "6",
+    "&" : "7",
+    "*" : "8",
+    "(" : "9",
+    ")" : "0",
+    "_" : "-",
+    "+" : "=",
+    "{" : "[",
+    "}" : "]",
+    "|" : "\\",
+    ":" : ";",
+    "\"" : "'",
+    "<" : ",",
+    ">" : ".",
+    "?" : "/",
+    "~" : "`",
+}
 
-def on_key_press(key):
-    for bind_name, key_value in binds.items():
-        if key == key_value:
-            buttons[bind_name].is_active = True
+def get_base_key(key_name):
+    if key_name in base_keys:
+        return base_keys[key_name]
+    else:
+        if len(key_name) == 1:
+            return key_name.lower()
+        else:
+            return key_name
 
-def on_key_release(key):
-    for bind_name, key_value in binds.items():
-        if key == key_value:
-            buttons[bind_name].is_active = False
+def on_press_key(key):
+    key_name = get_base_key(key.name)
+    if key_name in binds_reversed:
+        bind_name = binds_reversed[key_name]
+        buttons[bind_name].is_active = True
 
-keyboard_listener = keyboard.Listener(on_press=on_key_press, on_release=on_key_release)
-keyboard_listener.start()
+def on_release_key(key):
+    key_name = get_base_key(key.name)
+    if key_name in binds_reversed:
+        bind_name = binds_reversed[key_name]
+        buttons[bind_name].is_active = False
+
+for bind_name, bind_value in binds.items():
+    keyboard.on_press_key(keyboard.parse_hotkey(bind_value), on_press_key, True)
+    keyboard.on_release_key(keyboard.parse_hotkey(bind_value), on_release_key, True)
 
 
 controller = GameController(1)
@@ -119,7 +155,7 @@ while True:
 
     controller.send_outputs()
 
-    for state in buttons.values():
-        state.update()
+    for button in buttons.values():
+        button.update()
 
     time.sleep(0.001)
