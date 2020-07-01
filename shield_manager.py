@@ -10,7 +10,7 @@ class ShieldManager(object):
     def update(self, buttons):
         self.shield_value = buttons["shield"].is_active
 
-        if buttons["light_shield"].is_active and buttons["light_shield"].just_activated:
+        if buttons["shield"].is_active and buttons["light_shield"].just_activated:
             self.is_light_shielding = not self.is_light_shielding
 
         if buttons["shield"].just_deactivated:
