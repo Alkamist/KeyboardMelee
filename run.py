@@ -14,7 +14,7 @@ from angled_smasher import AngledSmasher
 from shield_manager import ShieldManager
 
 
-keyboard.block_key("right windows")
+#keyboard.block_key("right windows")
 
 key_binds = {
     "up" : "w",
@@ -26,7 +26,7 @@ key_binds = {
 
     "c_up" : "p",
     "c_down" : "/",
-    "c_right" : ".",
+    "c_right" : "'",
     "c_left" : "l",
 
     "d_up" : "1",
@@ -37,7 +37,7 @@ key_binds = {
     "short_hop" : "[",
     "full_hop" : "\\",
 
-    "a" : "'",
+    "a" : "right windows",
     "b" : ";",
     "z" : "]",
 
