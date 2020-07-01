@@ -12,6 +12,7 @@ from safe_grounded_down_b_manager import SafeGroundedDownBManager
 from backdash_out_of_crouch_fixer import BackdashOutOfCrouchFixer
 from angled_smasher import AngledSmasher
 from shield_manager import ShieldManager
+from spammer import Spammer
 
 
 #keyboard.block_key("right windows")
@@ -115,6 +116,7 @@ safe_grounded_down_b_manager = SafeGroundedDownBManager()
 backdash_out_of_crouch_fixer = BackdashOutOfCrouchFixer()
 angled_smasher = AngledSmasher()
 shield_manager = ShieldManager()
+b_spammer = Spammer()
 ls_x_raw = ButtonAxis()
 ls_y_raw = ButtonAxis()
 c_x_raw = ButtonAxis()
@@ -187,8 +189,13 @@ while True:
     ls_x_out = shield_tilt_manager.x_value
     ls_y_out = shield_tilt_manager.y_value
 
+    b_spammer.update(
+        start_spamming=buttons["a"].just_activated and buttons["b"].is_active,
+        stop_spamming=buttons["a"].just_deactivated or buttons["b"].just_deactivated,
+    )
+
     controller.a = buttons["a"].is_active
-    controller.b = buttons["b"].is_active
+    controller.b = buttons["b"].is_active if not b_spammer.is_spamming else b_spammer.output_state.is_active
     controller.x = jump_manager.full_hop_value if use_short_hop else buttons["full_hop"].is_active
     controller.y = jump_manager.short_hop_value if use_short_hop else buttons["short_hop"].is_active
     controller.z = buttons["z"].is_active
