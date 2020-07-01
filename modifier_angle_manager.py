@@ -1,10 +1,6 @@
-def normalize(value):
-    if value > 0.0:
-        return 1.0
-    elif value < 0.0:
-        return -1.0
-    else:
-        return 0.0
+import time
+
+from normalize import normalize
 
 
 class ModifierAngleManager(object):
@@ -15,12 +11,16 @@ class ModifierAngleManager(object):
         self.mod1_y = 0.2875
         self.mod2_x = 0.3500
         self.mod2_y = 0.7375
+        self.b_time = 0.0
 
     def update(self, buttons, x_axis_value, y_axis_value):
         self.x_value = x_axis_value
         self.y_value = y_axis_value
 
-        if buttons["mod1"].is_active and not buttons["b"].is_active:
+        if buttons["b"].just_activated:
+            self.b_time = time.perf_counter()
+
+        if buttons["mod1"].is_active and time.perf_counter() - self.b_time > 0.025:
             self.x_value = normalize(x_axis_value) * self.mod1_x
             self.y_value = normalize(y_axis_value) * self.mod1_y
         elif buttons["mod2"].is_active:
