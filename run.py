@@ -14,17 +14,19 @@ from angled_smasher import AngledSmasher
 from shield_manager import ShieldManager
 
 
+keyboard.block_key("right windows")
+
 key_binds = {
     "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
     "mod1" : "caps lock",
-    "mod2" : "alt",
+    "mod2" : "shift",
 
     "c_up" : "p",
-    "c_down" : "right windows",
-    "c_right" : "/",
+    "c_down" : "/",
+    "c_right" : ".",
     "c_left" : "l",
 
     "d_up" : "1",

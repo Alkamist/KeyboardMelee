@@ -20,7 +20,7 @@ class ModifierAngleManager(object):
         self.x_value = x_axis_value
         self.y_value = y_axis_value
 
-        if buttons["mod1"].is_active:
+        if buttons["mod1"].is_active and not buttons["b"].is_active:
             self.x_value = normalize(x_axis_value) * self.mod1_x
             self.y_value = normalize(y_axis_value) * self.mod1_y
         elif buttons["mod2"].is_active:
