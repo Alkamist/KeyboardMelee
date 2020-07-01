@@ -131,30 +131,19 @@ while True:
     c_y_raw.update(buttons["c_down"].is_active, buttons["c_up"].is_active)
     c_y_out = c_y_raw.value
 
-    jump_manager.update(
-        short_hop=buttons["short_hop"].is_active,
-        full_hop=buttons["full_hop"].is_active,
-    )
+    jump_manager.update(buttons=buttons)
 
-    shield_manager.update(
-        light_shield=buttons["light_shield"].is_active,
-        shield=buttons["shield"].is_active,
-    )
+    shield_manager.update(buttons=buttons)
 
     angled_smasher.update(
-        mod1=buttons["mod1"].is_active,
-        mod2=buttons["mod2"].is_active,
-        c_left=buttons["c_left"].is_active,
-        c_right=buttons["c_right"].is_active,
+        buttons=buttons,
         y_axis_value=ls_y_out,
         c_y_axis_value=c_y_out,
     )
     c_y_out = angled_smasher.c_y_value
 
     backdash_out_of_crouch_fixer.update(
-        down=buttons["down"].is_active,
-        left=buttons["left"].is_active,
-        right=buttons["right"].is_active,
+        buttons=buttons,
         disable_if=buttons["a"].is_active or buttons["b"].is_active or buttons["z"].is_active or buttons["air_dodge"].is_active \
                    or buttons["shield"].is_active or buttons["short_hop"].is_active or buttons["full_hop"].is_active,
         x_axis_value=ls_x_out,
@@ -162,9 +151,7 @@ while True:
     ls_x_out = backdash_out_of_crouch_fixer.x_value
 
     safe_grounded_down_b_manager.update(
-        b=buttons["b"].is_active,
-        down=buttons["down"].is_active,
-        up=buttons["up"].is_active,
+        buttons=buttons,
         x_axis_value=ls_x_out,
         y_axis_value=ls_y_out,
     )
@@ -172,8 +159,7 @@ while True:
     ls_y_out = safe_grounded_down_b_manager.y_value
 
     modifier_angle_manager.update(
-        mod1=buttons["mod1"].is_active,
-        mod2=buttons["mod2"].is_active,
+        buttons=buttons,
         x_axis_value=ls_x_out,
         y_axis_value=ls_y_out,
     )
@@ -181,10 +167,7 @@ while True:
     ls_y_out = modifier_angle_manager.y_value
 
     waveland_angle_manager.update(
-        air_dodge=buttons["air_dodge"].is_active,
-        left=buttons["left"].is_active,
-        right=buttons["right"].is_active,
-        down=buttons["down"].is_active,
+        buttons=buttons,
         x_axis_value=ls_x_out,
         y_axis_value=ls_y_out,
     )
@@ -192,12 +175,7 @@ while True:
     ls_y_out = waveland_angle_manager.y_value
 
     shield_tilt_manager.update(
-        shield=buttons["shield"].is_active,
-        air_dodge=buttons["air_dodge"].is_active,
-        left=buttons["left"].is_active,
-        right=buttons["right"].is_active,
-        down=buttons["down"].is_active,
-        mod1=buttons["mod1"].is_active,
+        buttons=buttons,
         x_axis_value=ls_x_out,
         y_axis_value=ls_y_out,
     )

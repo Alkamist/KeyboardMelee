@@ -16,13 +16,13 @@ class ModifierAngleManager(object):
         self.mod2_x = 0.3500
         self.mod2_y = 0.7375
 
-    def update(self, mod1, mod2, x_axis_value, y_axis_value):
+    def update(self, buttons, x_axis_value, y_axis_value):
         self.x_value = x_axis_value
         self.y_value = y_axis_value
 
-        if mod1:
+        if buttons["mod1"].is_active:
             self.x_value = normalize(x_axis_value) * self.mod1_x
             self.y_value = normalize(y_axis_value) * self.mod1_y
-        elif mod2:
+        elif buttons["mod2"].is_active:
             self.x_value = normalize(x_axis_value) * self.mod2_x
             self.y_value = normalize(y_axis_value) * self.mod2_y

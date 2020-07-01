@@ -1,6 +1,5 @@
 import time
 
-from state import State
 from normalize import normalize
 
 
@@ -10,18 +9,14 @@ class SafeGroundedDownBManager(object):
         self.y_value = 0.0
         self.x_level = 0.5875
         self.y_level = 0.6000
-        self.b_state = State()
         self.is_doing_safe_b = False
         self.safe_b_time = 0.0
 
-    def update(self, b, down, up, x_axis_value, y_axis_value):
-        self.b_state.update()
-        self.b_state.is_active = b
-
+    def update(self, buttons, x_axis_value, y_axis_value):
         self.x_value = x_axis_value
         self.y_value = y_axis_value
 
-        if self.b_state.just_activated and (down or up):
+        if buttons["b"].just_activated and (buttons["down"] or buttons["up"]):
             self.is_doing_safe_b = True
             self.safe_b_time = time.perf_counter()
 

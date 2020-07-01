@@ -6,21 +6,14 @@ class ShieldManager(object):
         self.shield_value = False
         self.light_shield_value = 0
         self.is_light_shielding = False
-        self.shield_state = State()
-        self.light_shield_state = State()
 
-    def update(self, light_shield, shield):
-        self.shield_state.update()
-        self.light_shield_state.update()
-        self.shield_state.is_active = shield
-        self.light_shield_state.is_active = light_shield
+    def update(self, buttons):
+        self.shield_value = buttons["shield"].is_active
 
-        self.shield_value = shield
-
-        if shield and self.light_shield_state.just_activated:
+        if buttons["light_shield"].is_active and buttons["light_shield"].just_activated:
             self.is_light_shielding = not self.is_light_shielding
 
-        if self.shield_state.just_deactivated:
+        if buttons["shield"].just_deactivated:
             self.is_light_shielding = False
 
         if self.is_light_shielding:
