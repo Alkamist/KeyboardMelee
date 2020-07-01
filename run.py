@@ -16,6 +16,8 @@ from shield_manager import ShieldManager
 
 #keyboard.block_key("right windows")
 
+use_short_hop = True
+
 key_binds = {
     "up" : "w",
     "down" : "s",
@@ -133,7 +135,8 @@ while True:
     c_y_raw.update(buttons["c_down"].is_active, buttons["c_up"].is_active)
     c_y_out = c_y_raw.value
 
-    jump_manager.update(buttons=buttons)
+    if use_short_hop:
+        jump_manager.update(buttons=buttons)
 
     shield_manager.update(buttons=buttons)
 
@@ -186,8 +189,8 @@ while True:
 
     controller.a = buttons["a"].is_active
     controller.b = buttons["b"].is_active
-    controller.x = jump_manager.full_hop_value
-    controller.y = jump_manager.short_hop_value
+    controller.x = jump_manager.full_hop_value if use_short_hop else buttons["full_hop"].is_active
+    controller.y = jump_manager.short_hop_value if use_short_hop else buttons["short_hop"].is_active
     controller.z = buttons["z"].is_active
     controller.l = shield_manager.shield_value
     controller.r = buttons["air_dodge"].is_active

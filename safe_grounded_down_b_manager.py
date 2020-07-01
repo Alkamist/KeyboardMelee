@@ -16,7 +16,7 @@ class SafeGroundedDownBManager(object):
         self.x_value = x_axis_value
         self.y_value = y_axis_value
 
-        if buttons["b"].just_activated and (buttons["down"] or buttons["up"]):
+        if buttons["b"].just_activated and (buttons["down"].is_active or buttons["up"].is_active):
             self.is_doing_safe_b = True
             self.safe_b_time = time.perf_counter()
 
