@@ -23,11 +23,19 @@ class SoftDirectionManager(object):
                    and (buttons["left"].is_active or buttons["right"].is_active)
         should_tilt = buttons["soft_left"].is_active or buttons["soft_right"].is_active or tilt_should_linger
 
+        sideways = buttons["left"].is_active or buttons["right"].is_active or buttons["soft_left"].is_active or buttons["soft_right"].is_active
+        diagonal = sideways and (buttons["down"].is_active or buttons["up"].is_active)
+
         if should_tilt and not suspend_tilt:
             if buttons["b"].is_active:
                 self.x_value = normalize(x_axis_value) * 0.3000
                 self.y_value = normalize(y_axis_value) * 0.6500
 
             else:
-                self.x_value = normalize(x_axis_value) * 0.6500
+                if diagonal and not buttons["mod1"].is_active:
+                    x_multiplier = 0.3000
+                else:
+                    x_multiplier = 0.6500
+
+                self.x_value = normalize(x_axis_value) * x_multiplier
                 self.y_value = normalize(y_axis_value) * 0.6500

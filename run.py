@@ -30,7 +30,7 @@ key_binds = {
 
     "c_up" : "p",
     "c_down" : "[",
-    "c_right" : "/",
+    "c_right" : "'",
     "c_left" : "l",
 
     "d_up" : "1",
@@ -41,7 +41,7 @@ key_binds = {
     "short_hop" : "]",
     "full_hop" : "enter",
 
-    "a" : "'",
+    "a" : "right windows",
     "b" : ";",
     "z" : "\\",
 
