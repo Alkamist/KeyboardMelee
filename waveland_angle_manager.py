@@ -29,7 +29,7 @@ class WavelandAngleManager(object):
                     self.y_value = self.y_level
 
                 else:
-                    self.y_value = -1.0
+                    self.y_value = self.y_level
 
             else:
                 self.is_wavelanding = False

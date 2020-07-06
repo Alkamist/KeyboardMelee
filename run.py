@@ -19,17 +19,48 @@ from spammer import Spammer
 
 use_short_hop = True
 
+#key_binds = {
+#    "up" : "w",
+#    "down" : "s",
+#    "right" : "d",
+#    "left" : "a",
+#    "mod1" : "caps lock",
+#    "mod2" : "shift",
+#
+#    "c_up" : "p",
+#    "c_down" : "/",
+#    "c_right" : "'",
+#    "c_left" : "l",
+#
+#    "d_up" : "1",
+#    "d_down" : "2",
+#    "d_right" : "3",
+#    "d_left" : "4",
+#
+#    "short_hop" : "[",
+#    "full_hop" : "\\",
+#
+#    "a" : "right windows",
+#    "b" : ";",
+#    "z" : "]",
+#
+#    "shield" : "space",
+#    "light_shield" : "-",
+#    "air_dodge" : "right alt",
+#
+#    "start" : "5",
+#}
 key_binds = {
     "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
-    "mod1" : "caps lock",
+    "mod1" : "space",
     "mod2" : "shift",
 
     "c_up" : "p",
-    "c_down" : "/",
-    "c_right" : "'",
+    "c_down" : "[",
+    "c_right" : "/",
     "c_left" : "l",
 
     "d_up" : "1",
@@ -37,14 +68,14 @@ key_binds = {
     "d_right" : "3",
     "d_left" : "4",
 
-    "short_hop" : "[",
-    "full_hop" : "\\",
+    "short_hop" : "]",
+    "full_hop" : "enter",
 
-    "a" : "right windows",
+    "a" : "'",
     "b" : ";",
-    "z" : "]",
+    "z" : "\\",
 
-    "shield" : "space",
+    "shield" : "caps lock",
     "light_shield" : "-",
     "air_dodge" : "right alt",
 
