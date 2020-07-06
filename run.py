@@ -1,6 +1,6 @@
 import time
 
-import keyboard
+from button_manager import ButtonManager
 from game_controller import GameController
 from state import State
 from button_axis import ButtonAxis
@@ -53,81 +53,12 @@ key_binds = {
 
     "start" : "5",
 }
-binds_reversed = {}
-for bind_name, bind_value in key_binds.items():
-    if isinstance(bind_value, tuple):
-        for i in range(len(bind_value)):
-            binds_reversed[bind_value[i]] = bind_name
-    else:
-        binds_reversed[bind_value] = bind_name
-
-buttons = {}
-for name in key_binds:
-    buttons[name] = State()
-
-base_keys = {
-    "!" : "1",
-    "@" : "2",
-    "#" : "3",
-    "$" : "4",
-    "%" : "5",
-    "^" : "6",
-    "&" : "7",
-    "*" : "8",
-    "(" : "9",
-    ")" : "0",
-    "_" : "-",
-    "+" : "=",
-    "{" : "[",
-    "}" : "]",
-    "|" : "\\",
-    ":" : ";",
-    "\"" : "'",
-    "<" : ",",
-    ">" : ".",
-    "?" : "/",
-    "~" : "`",
-}
-
-def get_base_key(key_name):
-    if key_name in base_keys:
-        return base_keys[key_name]
-    else:
-        if len(key_name) == 1:
-            return key_name.lower()
-        else:
-            return key_name
-
-def on_press_key(key):
-    key_name = get_base_key(key.name)
-    if key_name in binds_reversed:
-        bind_name = binds_reversed[key_name]
-        buttons[bind_name].is_active = True
-
-def on_release_key(key):
-    key_name = get_base_key(key.name)
-    if key_name in binds_reversed:
-        bind_name = binds_reversed[key_name]
-
-        another_same_bind_is_pressed = False
-        for physical_key in key_binds[bind_name]:
-            if key_name != physical_key and keyboard.is_pressed(physical_key):
-                another_same_bind_is_pressed = True
-
-        if not another_same_bind_is_pressed:
-            buttons[bind_name].is_active = False
-
-for bind_name, bind_value in key_binds.items():
-    if isinstance(bind_value, tuple):
-        for i in range(len(bind_value)):
-            keyboard.on_press_key(keyboard.parse_hotkey(bind_value[i]), on_press_key, True)
-            keyboard.on_release_key(keyboard.parse_hotkey(bind_value[i]), on_release_key, True)
-    else:
-        keyboard.on_press_key(keyboard.parse_hotkey(bind_value), on_press_key, True)
-        keyboard.on_release_key(keyboard.parse_hotkey(bind_value), on_release_key, True)
 
 
 controller = GameController(1)
+
+button_manager = ButtonManager(key_binds)
+buttons = button_manager.buttons
 
 jump_manager = JumpManager()
 shield_tilt_manager = ShieldTiltManager()
