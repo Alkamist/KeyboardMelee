@@ -13,48 +13,20 @@ from backdash_out_of_crouch_fixer import BackdashOutOfCrouchFixer
 from angled_smasher import AngledSmasher
 from shield_manager import ShieldManager
 from spammer import Spammer
+from soft_direction_manager import SoftDirectionManager
 
 
 #keyboard.block_key("right windows")
 
 use_short_hop = True
 
-#key_binds = {
-#    "up" : "w",
-#    "down" : "s",
-#    "right" : "d",
-#    "left" : "a",
-#    "mod1" : "caps lock",
-#    "mod2" : "shift",
-#
-#    "c_up" : "p",
-#    "c_down" : "/",
-#    "c_right" : "'",
-#    "c_left" : "l",
-#
-#    "d_up" : "1",
-#    "d_down" : "2",
-#    "d_right" : "3",
-#    "d_left" : "4",
-#
-#    "short_hop" : "[",
-#    "full_hop" : "\\",
-#
-#    "a" : "right windows",
-#    "b" : ";",
-#    "z" : "]",
-#
-#    "shield" : "space",
-#    "light_shield" : "-",
-#    "air_dodge" : "right alt",
-#
-#    "start" : "5",
-#}
 key_binds = {
     "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
+    "soft_left" : "q",
+    "soft_right" : "e",
     "mod1" : "space",
     "mod2" : "shift",
 
@@ -81,7 +53,13 @@ key_binds = {
 
     "start" : "5",
 }
-binds_reversed = dict((v, k) for k, v in key_binds.items())
+binds_reversed = {}
+for bind_name, bind_value in key_binds.items():
+    if isinstance(bind_value, tuple):
+        for i in range(len(bind_value)):
+            binds_reversed[bind_value[i]] = bind_name
+    else:
+        binds_reversed[bind_value] = bind_name
 
 buttons = {}
 for name in key_binds:
@@ -130,11 +108,23 @@ def on_release_key(key):
     key_name = get_base_key(key.name)
     if key_name in binds_reversed:
         bind_name = binds_reversed[key_name]
-        buttons[bind_name].is_active = False
+
+        another_same_bind_is_pressed = False
+        for physical_key in key_binds[bind_name]:
+            if key_name != physical_key and keyboard.is_pressed(physical_key):
+                another_same_bind_is_pressed = True
+
+        if not another_same_bind_is_pressed:
+            buttons[bind_name].is_active = False
 
 for bind_name, bind_value in key_binds.items():
-    keyboard.on_press_key(keyboard.parse_hotkey(bind_value), on_press_key, True)
-    keyboard.on_release_key(keyboard.parse_hotkey(bind_value), on_release_key, True)
+    if isinstance(bind_value, tuple):
+        for i in range(len(bind_value)):
+            keyboard.on_press_key(keyboard.parse_hotkey(bind_value[i]), on_press_key, True)
+            keyboard.on_release_key(keyboard.parse_hotkey(bind_value[i]), on_release_key, True)
+    else:
+        keyboard.on_press_key(keyboard.parse_hotkey(bind_value), on_press_key, True)
+        keyboard.on_release_key(keyboard.parse_hotkey(bind_value), on_release_key, True)
 
 
 controller = GameController(1)
@@ -147,6 +137,7 @@ safe_grounded_down_b_manager = SafeGroundedDownBManager()
 backdash_out_of_crouch_fixer = BackdashOutOfCrouchFixer()
 angled_smasher = AngledSmasher()
 shield_manager = ShieldManager()
+soft_direction_manager = SoftDirectionManager()
 b_spammer = Spammer()
 ls_x_raw = ButtonAxis()
 ls_y_raw = ButtonAxis()
@@ -158,7 +149,7 @@ while True:
     ls_x_out = 0.0
     ls_y_out = 0.0
 
-    ls_x_raw.update(buttons["left"].is_active, buttons["right"].is_active)
+    ls_x_raw.update(buttons["left"].is_active or buttons["soft_left"].is_active, buttons["right"].is_active or buttons["soft_right"].is_active)
     ls_x_out = ls_x_raw.value
 
     ls_y_raw.update(buttons["down"].is_active, buttons["up"].is_active)
@@ -203,6 +194,14 @@ while True:
     )
     ls_x_out = modifier_angle_manager.x_value
     ls_y_out = modifier_angle_manager.y_value
+
+    #soft_direction_manager.update(
+    #    buttons=buttons,
+    #    x_axis_value=ls_x_out,
+    #    y_axis_value=ls_y_out,
+    #)
+    #ls_x_out = soft_direction_manager.x_value
+    #ls_y_out = soft_direction_manager.y_value
 
     waveland_angle_manager.update(
         buttons=buttons,
