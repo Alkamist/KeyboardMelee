@@ -24,6 +24,6 @@ class ModifierAngleManager(object):
             self.x_value = normalize(x_axis_value) * self.mod1_x
             self.y_value = normalize(y_axis_value) * self.mod1_y
 
-        elif buttons["mod2"].is_active:
+        elif buttons["mod2"].is_active and time.perf_counter() - self.b_time > 0.025:
             self.x_value = normalize(x_axis_value) * self.mod2_x
             self.y_value = normalize(y_axis_value) * self.mod2_y

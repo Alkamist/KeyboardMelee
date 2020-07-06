@@ -16,8 +16,6 @@ from spammer import Spammer
 from soft_direction_manager import SoftDirectionManager
 
 
-#keyboard.block_key("right windows")
-
 use_short_hop = True
 
 key_binds = {
@@ -28,7 +26,7 @@ key_binds = {
     "soft_left" : "q",
     "soft_right" : "e",
     "mod1" : "space",
-    "mod2" : "shift",
+    "mod2" : "alt",
 
     "c_up" : "p",
     "c_down" : "[",
@@ -126,13 +124,13 @@ while True:
     ls_x_out = modifier_angle_manager.x_value
     ls_y_out = modifier_angle_manager.y_value
 
-    #soft_direction_manager.update(
-    #    buttons=buttons,
-    #    x_axis_value=ls_x_out,
-    #    y_axis_value=ls_y_out,
-    #)
-    #ls_x_out = soft_direction_manager.x_value
-    #ls_y_out = soft_direction_manager.y_value
+    soft_direction_manager.update(
+        buttons=buttons,
+        x_axis_value=ls_x_out,
+        y_axis_value=ls_y_out,
+    )
+    ls_x_out = soft_direction_manager.x_value
+    ls_y_out = soft_direction_manager.y_value
 
     waveland_angle_manager.update(
         buttons=buttons,
