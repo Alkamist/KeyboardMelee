@@ -49,26 +49,8 @@ class SliderOutput(object):
 class GameController(object):
     def __init__(self, device_id=1):
         self.vjoy_device = VJoyDevice(1)
-        self.a = False
-        self.b = False
-        self.x = False
-        self.y = False
-        self.z = False
-        self.l = False
-        self.r = False
-        self.start = False
-        self.d_left = False
-        self.d_right = False
-        self.d_down = False
-        self.d_up = False
-        self.ls_x = 0.0
-        self.ls_y = 0.0
-        self.c_x = 0.0
-        self.c_y = 0.0
-        self.l_analog = 0.0
-        self.r_analog = 0.0
 
-        self.outputs = {
+        self.real_outputs = {
             "a" : ButtonOutput(self.vjoy_device, 1, False),
             "b" : ButtonOutput(self.vjoy_device, 2, False),
             "x" : ButtonOutput(self.vjoy_device, 3, False),
@@ -85,13 +67,14 @@ class GameController(object):
             "ls_y" : AxisOutput(self.vjoy_device, "y", 0.0),
             "c_x" : AxisOutput(self.vjoy_device, "rx", 0.0),
             "c_y" : AxisOutput(self.vjoy_device, "ry", 0.0),
-            "l_analog" : SliderOutput(self.vjoy_device, "rz", 0.0),
+            "l_analog" : SliderOutput(self.vjoy_device, "rz", 0),
             #"r_analog" : 0.0,
         }
 
         self.send_outputs()
 
-    def send_outputs(self):
-        for output_name, output in self.outputs.items():
-            output.value = getattr(self, output_name)
+    def send_outputs(self, outputs=None):
+        for output_name, output in self.real_outputs.items():
+            if outputs is not None:
+                output.value = outputs[output_name]
             output.update()
