@@ -7,11 +7,10 @@ class ATiltLogic(object):
         self.outputs = outputs
         self.tilt_time = 0.0
         self.neutral_time = 0.0
-        self.delay_a_for = 0.0
+        self.should_delay_a_press = False
         self.should_press_a = False
         self.a_output = False
         self.a_press_time = 0.0
-        self.suppress_c_stick = False
 
     def update(self):
         buttons = self.buttons
@@ -23,20 +22,13 @@ class ATiltLogic(object):
 
         if should_do_tilt:
             self.tilt_time = time.perf_counter()
-            self.suppress_c_stick = True
-            if buttons["c_left"].is_active or buttons["c_right"].is_active:
-                if buttons["c_left"].is_active and (buttons["right"].is_active or buttons["soft_right"].is_active) \
-                or buttons["c_right"].is_active and (buttons["left"].is_active or buttons["soft_left"].is_active):
-                    self.delay_a_for = 0.035
-                else:
-                    self.delay_a_for = 0.017
-            else:
+            self.should_delay_a_press = buttons["c_left"].is_active or buttons["c_right"].is_active
+            if not self.should_delay_a_press:
                 self.should_press_a = True
-                self.delay_a_for = 0.0
 
-        if self.delay_a_for > 0.0 and time.perf_counter() - self.tilt_time >= self.delay_a_for:
+        if self.should_delay_a_press and time.perf_counter() - self.tilt_time >= 0.017:
             self.should_press_a = True
-            self.delay_a_for = 0.0
+            self.should_delay_a_press = False
 
 
         # Handle pressing a.
@@ -52,15 +44,14 @@ class ATiltLogic(object):
 
         if stop_a_press:
             self.a_output = False
-            self.suppress_c_stick = False
 
 
         # Write the outputs.
         self.outputs["a"] = self.a_output or self.buttons["a"].is_active
-        if self.suppress_c_stick:
+        if self.a_output or self.should_delay_a_press:
             self.outputs["c_x"] = 0.0
             self.outputs["c_y"] = 0.0
-        if time.perf_counter() - self.tilt_time <= 0.067:
+        if time.perf_counter() - self.tilt_time <= 0.045:
             self.outputs["ls_x"] = self.outputs["c_x_raw"] * 0.6000
             self.outputs["ls_y"] = self.outputs["c_y_raw"] * 0.6000
 
