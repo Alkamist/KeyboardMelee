@@ -16,6 +16,39 @@ from a_tilt_logic import ATiltLogic
 
 use_short_hop = True
 
+#key_binds = {
+#    "up" : "w",
+#    "down" : "s",
+#    "right" : "d",
+#    "left" : "a",
+#    "soft_left" : "q",
+#    "soft_right" : "e",
+#    "mod1" : "space",
+#    "mod2" : "alt",
+#
+#    "c_up" : "p",
+#    "c_down" : ";",
+#    "c_right" : "'",
+#    "c_left" : "l",
+#
+#    "d_up" : "1",
+#    "d_down" : "2",
+#    "d_right" : "3",
+#    "d_left" : "4",
+#
+#    "short_hop" : "]",
+#    "full_hop" : "enter",
+#
+#    "a" : "right windows",
+#    "b" : "[",
+#    "z" : "\\",
+#
+#    "shield" : "caps lock",
+#    "light_shield" : "-",
+#    "air_dodge" : "right alt",
+#
+#    "start" : "5",
+#}
 key_binds = {
     "up" : "w",
     "down" : "s",
@@ -27,7 +60,7 @@ key_binds = {
     "mod2" : "alt",
 
     "c_up" : "p",
-    "c_down" : ";",
+    "c_down" : "/",
     "c_right" : "'",
     "c_left" : "l",
 
@@ -36,12 +69,12 @@ key_binds = {
     "d_right" : "3",
     "d_left" : "4",
 
-    "short_hop" : "]",
-    "full_hop" : "enter",
+    "short_hop" : "[",
+    "full_hop" : "\\",
 
     "a" : "right windows",
-    "b" : "[",
-    "z" : "\\",
+    "b" : ";",
+    "z" : "]",
 
     "shield" : "caps lock",
     "light_shield" : "-",
