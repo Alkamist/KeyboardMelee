@@ -14,7 +14,6 @@ from angled_smasher import AngledSmasher
 from shield_manager import ShieldManager
 from spammer import Spammer
 from soft_direction_manager import SoftDirectionManager
-from button_tilt_manager import ButtonTiltManager
 
 
 use_short_hop = True
@@ -30,7 +29,7 @@ key_binds = {
     "mod2" : "alt",
 
     "c_up" : "p",
-    "c_down" : ";",
+    "c_down" : "[",
     "c_right" : "'",
     "c_left" : "l",
 
@@ -43,7 +42,7 @@ key_binds = {
     "full_hop" : "enter",
 
     "a" : "right windows",
-    "b" : "[",
+    "b" : ";",
     "z" : "\\",
 
     "shield" : "caps lock",
@@ -59,7 +58,6 @@ controller = GameController(1)
 button_manager = ButtonManager(key_binds)
 buttons = button_manager.buttons
 
-button_tilt_manager = ButtonTiltManager(buttons)
 jump_manager = JumpManager()
 shield_tilt_manager = ShieldTiltManager()
 waveland_angle_manager = WavelandAngleManager()
@@ -87,8 +85,6 @@ while True:
     ls_y_out = ls_y_raw.value
 
     c_x_raw.update(buttons["c_left"].is_active, buttons["c_right"].is_active)
-    c_x_out = c_x_raw.value
-
     c_y_raw.update(buttons["c_down"].is_active, buttons["c_up"].is_active)
     c_y_out = c_y_raw.value
 
@@ -97,12 +93,12 @@ while True:
 
     shield_manager.update(buttons=buttons)
 
-    #angled_smasher.update(
-    #    buttons=buttons,
-    #    y_axis_value=ls_y_out,
-    #    c_y_axis_value=c_y_out,
-    #)
-    #c_y_out = angled_smasher.c_y_value
+    angled_smasher.update(
+        buttons=buttons,
+        y_axis_value=ls_y_out,
+        c_y_axis_value=c_y_out,
+    )
+    c_y_out = angled_smasher.c_y_value
 
     backdash_out_of_crouch_fixer.update(
         buttons=buttons,
@@ -112,21 +108,21 @@ while True:
     )
     ls_x_out = backdash_out_of_crouch_fixer.x_value
 
-    #safe_grounded_down_b_manager.update(
-    #    buttons=buttons,
-    #    x_axis_value=ls_x_out,
-    #    y_axis_value=ls_y_out,
-    #)
-    #ls_x_out = safe_grounded_down_b_manager.x_value
-    #ls_y_out = safe_grounded_down_b_manager.y_value
+    safe_grounded_down_b_manager.update(
+        buttons=buttons,
+        x_axis_value=ls_x_out,
+        y_axis_value=ls_y_out,
+    )
+    ls_x_out = safe_grounded_down_b_manager.x_value
+    ls_y_out = safe_grounded_down_b_manager.y_value
 
-    #modifier_angle_manager.update(
-    #    buttons=buttons,
-    #    x_axis_value=ls_x_out,
-    #    y_axis_value=ls_y_out,
-    #)
-    #ls_x_out = modifier_angle_manager.x_value
-    #ls_y_out = modifier_angle_manager.y_value
+    modifier_angle_manager.update(
+        buttons=buttons,
+        x_axis_value=ls_x_out,
+        y_axis_value=ls_y_out,
+    )
+    ls_x_out = modifier_angle_manager.x_value
+    ls_y_out = modifier_angle_manager.y_value
 
     soft_direction_manager.update(
         buttons=buttons,
@@ -135,17 +131,6 @@ while True:
     )
     ls_x_out = soft_direction_manager.x_value
     ls_y_out = soft_direction_manager.y_value
-
-    button_tilt_manager.update(
-        x_axis_value=ls_x_out,
-        y_axis_value=ls_y_out,
-        c_x_axis_value=c_x_out,
-        c_y_axis_value=c_y_out,
-    )
-    ls_x_out = button_tilt_manager.x_value
-    ls_y_out = button_tilt_manager.y_value
-    c_x_out = button_tilt_manager.c_x_value
-    c_y_out = button_tilt_manager.c_y_value
 
     waveland_angle_manager.update(
         buttons=buttons,
@@ -163,13 +148,13 @@ while True:
     ls_x_out = shield_tilt_manager.x_value
     ls_y_out = shield_tilt_manager.y_value
 
-    #b_spammer.update(
-    #    start_spamming=buttons["a"].just_activated and buttons["b"].is_active,
-    #    stop_spamming=buttons["a"].just_deactivated or buttons["b"].just_deactivated,
-    #)
+    b_spammer.update(
+        start_spamming=buttons["a"].just_activated and buttons["b"].is_active,
+        stop_spamming=buttons["a"].just_deactivated or buttons["b"].just_deactivated,
+    )
 
-    controller.a = button_tilt_manager.a_value
-    controller.b = button_tilt_manager.b_value# if not b_spammer.is_spamming else b_spammer.output_state.is_active
+    controller.a = buttons["a"].is_active
+    controller.b = buttons["b"].is_active if not b_spammer.is_spamming else b_spammer.output_state.is_active
     controller.x = jump_manager.full_hop_value if use_short_hop else buttons["full_hop"].is_active
     controller.y = jump_manager.short_hop_value if use_short_hop else buttons["short_hop"].is_active
     controller.z = buttons["z"].is_active
@@ -182,7 +167,7 @@ while True:
     controller.d_up = buttons["d_up"].is_active
     controller.ls_x = ls_x_out
     controller.ls_y = ls_y_out
-    controller.c_x = c_x_out
+    controller.c_x = c_x_raw.value
     controller.c_y = c_y_out
     controller.l_analog = shield_manager.light_shield_value
 
