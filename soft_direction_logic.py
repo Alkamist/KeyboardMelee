@@ -34,3 +34,6 @@ class SoftDirectionLogic(object):
                 self.outputs["ls_y"] = self.outputs["ls_y_raw"] * 0.9500
             else:
                 self.outputs["ls_y"] = self.outputs["ls_y_raw"] * 0.6500
+
+        if soft_is_pressed and buttons["b"].is_active:
+            self.outputs["ls_x"] = self.outputs["ls_x_raw"] * 0.3000
