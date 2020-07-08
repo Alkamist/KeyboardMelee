@@ -16,7 +16,7 @@ class ATiltLogic(object):
     def update(self):
         buttons = self.buttons
 
-        is_holding_tilt_mod = buttons["soft_left"].is_active or buttons["soft_right"].is_active
+        is_holding_tilt_mod = (buttons["soft_left"].is_active or buttons["soft_right"].is_active) and not buttons["disable_tilt"].is_active
         any_c_button = buttons["c_up"].just_activated or buttons["c_down"].just_activated \
                     or buttons["c_left"].just_activated or buttons["c_right"].just_activated
         should_do_tilt = is_holding_tilt_mod and any_c_button
@@ -67,7 +67,7 @@ class ATiltLogic(object):
 
 
         # Handle neutral a press.
-        if self.buttons["a"].just_activated:
+        if self.buttons["a"].just_activated and not buttons["disable_tilt"].is_active:
             self.neutral_time = time.perf_counter()
 
         if time.perf_counter() - self.neutral_time < 0.025:

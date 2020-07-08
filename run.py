@@ -26,6 +26,8 @@ key_binds = {
     "mod1" : "space",
     "mod2" : "alt",
 
+    "disable_tilt" : "enter",
+
     "c_up" : "p",
     "c_down" : "/",
     "c_right" : "'",
