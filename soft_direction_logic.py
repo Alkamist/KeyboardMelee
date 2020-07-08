@@ -12,7 +12,8 @@ class SoftDirectionLogic(object):
 
         soft_is_pressed = (buttons["soft_left"].is_active or buttons["soft_right"].is_active)
         reset_on_soft_press = buttons["soft_left"].just_activated or buttons["soft_right"].just_activated
-        reset_on_release = soft_is_pressed and (buttons["soft_left"].just_deactivated or buttons["soft_right"].just_deactivated)
+        reset_on_release = soft_is_pressed and (buttons["soft_left"].just_deactivated or buttons["soft_right"].just_deactivated \
+                                             or buttons["left"].just_deactivated or buttons["right"].just_deactivated)
         reset_on_release_to_up = buttons["up"].is_active and (buttons["soft_left"].just_deactivated or buttons["soft_right"].just_deactivated)
         reset_tilt = reset_on_soft_press or reset_on_release or reset_on_release_to_up
 
