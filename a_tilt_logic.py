@@ -16,7 +16,7 @@ class ATiltLogic(object):
     def update(self):
         buttons = self.buttons
 
-        is_holding_tilt_mod = buttons["mod1"].is_active
+        is_holding_tilt_mod = buttons["soft_left"].is_active or buttons["soft_right"].is_active
         any_c_button = buttons["c_up"].just_activated or buttons["c_down"].just_activated \
                     or buttons["c_left"].just_activated or buttons["c_right"].just_activated
         should_do_tilt = is_holding_tilt_mod and any_c_button
@@ -24,12 +24,9 @@ class ATiltLogic(object):
         if should_do_tilt:
             self.tilt_time = time.perf_counter()
             self.suppress_c_stick = True
-            if buttons["c_left"].is_active or buttons["c_right"].is_active:
-                if buttons["c_left"].is_active and (buttons["right"].is_active or buttons["soft_right"].is_active) \
-                or buttons["c_right"].is_active and (buttons["left"].is_active or buttons["soft_left"].is_active):
-                    self.delay_a_for = 0.035
-                else:
-                    self.delay_a_for = 0.017
+            if buttons["c_left"].is_active and (buttons["right"].is_active or buttons["soft_right"].is_active) \
+            or buttons["c_right"].is_active and (buttons["left"].is_active or buttons["soft_left"].is_active):
+                self.delay_a_for = 0.035
             else:
                 self.should_press_a = True
                 self.delay_a_for = 0.0
@@ -61,8 +58,12 @@ class ATiltLogic(object):
             self.outputs["c_x"] = 0.0
             self.outputs["c_y"] = 0.0
         if time.perf_counter() - self.tilt_time <= 0.067:
+            should_bias_y = (buttons["down"].is_active or buttons["up"].is_active) \
+                        and (buttons["soft_left"].is_active or buttons["soft_right"].is_active) \
+                        and not (buttons["c_down"].is_active or buttons["c_up"].is_active)
+            y_bias = 0.5 * self.outputs["ls_y_raw"] if should_bias_y else 0.0
             self.outputs["ls_x"] = self.outputs["c_x_raw"] * 0.6000
-            self.outputs["ls_y"] = self.outputs["c_y_raw"] * 0.6000
+            self.outputs["ls_y"] = self.outputs["c_y_raw"] * 0.6000 + y_bias
 
 
         # Handle neutral a press.
