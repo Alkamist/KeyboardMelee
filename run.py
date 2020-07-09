@@ -23,10 +23,10 @@ key_binds = {
     "left" : "a",
     "soft_left" : "q",
     "soft_right" : "e",
-    "mod1" : "space",
+    "mod1" : "shift",
     "mod2" : "alt",
 
-    "disable_tilt" : "enter",
+    "disable_tilt" : "space",
 
     "c_up" : "p",
     "c_down" : "/",
