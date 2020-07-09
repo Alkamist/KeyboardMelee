@@ -5,7 +5,7 @@ class ButtonOutput(object):
     def __init__(self, vjoy_device, id, value):
         self.vjoy_device = vjoy_device
         self.value = value
-        self.previous_value = value
+        self.previous_value = None
         self.id = id
 
     def update(self):
@@ -19,7 +19,7 @@ class AxisOutput(object):
     def __init__(self, vjoy_device, name, value):
         self.vjoy_device = vjoy_device
         self.value = value
-        self.previous_value = value
+        self.previous_value = None
         self.name = name
         self.axis_max_scale = 0.626
 
@@ -34,7 +34,7 @@ class SliderOutput(object):
     def __init__(self, vjoy_device, name, value):
         self.vjoy_device = vjoy_device
         self.value = value
-        self.previous_value = value
+        self.previous_value = None
         self.name = name
 
     def update(self):
@@ -78,3 +78,4 @@ class GameController(object):
             if outputs is not None:
                 output.value = outputs[output_name]
             output.update()
+        self.vjoy_device.update()

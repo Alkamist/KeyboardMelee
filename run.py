@@ -144,6 +144,8 @@ while True:
     if c_diagonal:
         outputs["c_y"] = outputs["c_y"] * 0.5
 
+    #outputs["l_analog"] = 64 if buttons["short_hop"].is_active else 0
+
     controller.send_outputs(outputs)
 
     for button in buttons.values():
