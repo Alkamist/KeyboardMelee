@@ -40,8 +40,7 @@ class SliderOutput(object):
     def update(self):
         if self.value != self.previous_value:
             zero_to_one_value = (self.value + 1) / 255.0
-            proper_value = zero_to_one_value
-            self.vjoy_device.set_axis(self.name, proper_value)
+            self.vjoy_device.set_axis(self.name, zero_to_one_value)
 
         self.previous_value = self.value
 
