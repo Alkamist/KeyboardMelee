@@ -57,12 +57,17 @@ class ATiltLogic(object):
         if self.suppress_c_stick:
             self.outputs["c_x"] = 0.0
             self.outputs["c_y"] = 0.0
+
         if time.perf_counter() - self.tilt_time <= 0.067:
+            should_bias_x = (buttons["soft_left"].is_active or buttons["soft_right"].is_active) \
+                        and not (buttons["c_left"].is_active or buttons["c_right"].is_active)
+            x_bias = 0.35 * self.outputs["ls_x_raw"] if should_bias_x else 0.0
+            self.outputs["ls_x"] = self.outputs["c_x_raw"] * 0.6000 + x_bias
+
             should_bias_y = (buttons["down"].is_active or buttons["up"].is_active) \
                         and (buttons["soft_left"].is_active or buttons["soft_right"].is_active) \
                         and not (buttons["c_down"].is_active or buttons["c_up"].is_active)
             y_bias = 0.5 * self.outputs["ls_y_raw"] if should_bias_y else 0.0
-            self.outputs["ls_x"] = self.outputs["c_x_raw"] * 0.6000
             self.outputs["ls_y"] = self.outputs["c_y_raw"] * 0.6000 + y_bias
 
 
