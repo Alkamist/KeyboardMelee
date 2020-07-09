@@ -72,7 +72,7 @@ class ATiltLogic(object):
 
 
         # Handle neutral a press.
-        if self.buttons["a"].just_activated and not buttons["disable_tilt"].is_active:
+        if self.buttons["a"].just_activated:
             self.neutral_time = time.perf_counter()
 
         if time.perf_counter() - self.neutral_time < 0.025:
