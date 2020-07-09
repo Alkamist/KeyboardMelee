@@ -33,10 +33,10 @@ key_binds = {
     "c_right" : "'",
     "c_left" : "l",
 
-    "d_up" : "1",
-    "d_down" : "2",
-    "d_right" : "3",
-    "d_left" : "4",
+    "d_up" : "g",
+    "d_down" : "b",
+    "d_right" : "n",
+    "d_left" : "v",
 
     "short_hop" : "[",
     "full_hop" : "\\",
@@ -143,8 +143,6 @@ while True:
     c_diagonal = (buttons["c_left"].is_active or buttons["c_right"].is_active) and (buttons["c_up"].is_active or buttons["c_down"].is_active)
     if c_diagonal:
         outputs["c_y"] = outputs["c_y"] * 0.5
-
-    #outputs["l_analog"] = 64 if buttons["short_hop"].is_active else 0
 
     controller.send_outputs(outputs)
 

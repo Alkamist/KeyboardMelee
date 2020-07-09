@@ -39,8 +39,8 @@ class SliderOutput(object):
 
     def update(self):
         if self.value != self.previous_value:
-            zero_to_one_value = self.value / 255.0
-            proper_value = 0.5 - 0.5 * zero_to_one_value
+            zero_to_one_value = (self.value + 1) / 255.0
+            proper_value = zero_to_one_value
             self.vjoy_device.set_axis(self.name, proper_value)
 
         self.previous_value = self.value
@@ -60,14 +60,14 @@ class GameController(object):
             "r" : ButtonOutput(self.vjoy_device, 7, False),
             "start" : ButtonOutput(self.vjoy_device, 8, False),
             "d_left" : ButtonOutput(self.vjoy_device, 9, False),
-            "d_right" : ButtonOutput(self.vjoy_device, 10, False),
-            "d_down" : ButtonOutput(self.vjoy_device, 11, False),
-            "d_up" : ButtonOutput(self.vjoy_device, 12, False),
+            "d_up" : ButtonOutput(self.vjoy_device, 10, False),
+            "d_right" : ButtonOutput(self.vjoy_device, 11, False),
+            "d_down" : ButtonOutput(self.vjoy_device, 12, False),
             "ls_x" : AxisOutput(self.vjoy_device, "x", 0.0),
             "ls_y" : AxisOutput(self.vjoy_device, "y", 0.0),
             "c_x" : AxisOutput(self.vjoy_device, "rx", 0.0),
             "c_y" : AxisOutput(self.vjoy_device, "ry", 0.0),
-            "l_analog" : SliderOutput(self.vjoy_device, "rz", 0),
+            "l_analog" : SliderOutput(self.vjoy_device, "sl0", 0),
             #"r_analog" : 0.0,
         }
 

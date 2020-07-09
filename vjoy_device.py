@@ -20,8 +20,8 @@ axes = {
     "z" : "wAxisZ",
     "rx" :"wAxisXRot",
     "ry" : "wAxisYRot",
-    "rz" : "wAxisZRot",
-    #"sl0" : "wSlider",
+    #"rz" : "wAxisZRot",
+    "sl0" : "wSlider",
     #"sl1" : 0x37,
 }
 
