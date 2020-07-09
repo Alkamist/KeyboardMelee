@@ -1,4 +1,6 @@
+import time
 import keyboard
+time.sleep(0.01)
 
 from state import State
 
