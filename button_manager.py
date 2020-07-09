@@ -86,11 +86,13 @@ class ButtonManager(object):
         for bind_name, bind_value in self.key_binds.items():
             if isinstance(bind_value, tuple):
                 for i in range(len(bind_value)):
-                    keyboard.on_press_key(keyboard.parse_hotkey(bind_value[i]), on_press_key, True)
-                    keyboard.on_release_key(keyboard.parse_hotkey(bind_value[i]), on_release_key, True)
+                    parsed_hotkey = keyboard.parse_hotkey(bind_value[i])
+                    keyboard.on_press_key(parsed_hotkey, on_press_key, True)
+                    keyboard.on_release_key(parsed_hotkey, on_release_key, True)
             else:
-                keyboard.on_press_key(keyboard.parse_hotkey(bind_value), on_press_key, True)
-                keyboard.on_release_key(keyboard.parse_hotkey(bind_value), on_release_key, True)
+                parsed_hotkey = keyboard.parse_hotkey(bind_value)
+                keyboard.on_press_key(parsed_hotkey, on_press_key, True)
+                keyboard.on_release_key(parsed_hotkey, on_release_key, True)
 
     def update(self):
         for button in self.buttons.values():
