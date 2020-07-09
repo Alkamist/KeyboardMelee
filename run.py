@@ -99,6 +99,8 @@ c_y_raw = ButtonAxis()
 
 
 while True:
+    button_manager.update()
+
     outputs["a"] = buttons["a"].is_active
     outputs["b"] = buttons["b"].is_active
     outputs["x"] = buttons["full_hop"].is_active
@@ -145,8 +147,5 @@ while True:
         outputs["c_y"] = outputs["c_y"] * 0.5
 
     controller.send_outputs(outputs)
-
-    for button in buttons.values():
-        button.update()
 
     time.sleep(0.001)

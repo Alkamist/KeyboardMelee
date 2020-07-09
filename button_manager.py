@@ -60,24 +60,28 @@ class ButtonManager(object):
 
         def on_press_key(key):
             key_name = get_base_key(key.name)
+
             if key_name in self.key_binds_reversed:
                 self.key_is_pressed[key_name] = True
                 bind_name = self.key_binds_reversed[key_name]
-                self.buttons[bind_name].is_active = True
+                self.buttons[bind_name].pending_state = True
 
         def on_release_key(key):
             key_name = get_base_key(key.name)
+
             if key_name in self.key_binds_reversed:
                 bind_name = self.key_binds_reversed[key_name]
 
                 another_same_bind_is_pressed = False
                 if isinstance(self.key_binds[bind_name], tuple):
                     for physical_key in self.key_binds[bind_name]:
-                        if key_name != physical_key and keyboard.is_pressed(physical_key):
+                        if key_name != physical_key and self.key_is_pressed[physical_key]:
                             another_same_bind_is_pressed = True
 
                 if not another_same_bind_is_pressed:
-                    self.buttons[bind_name].is_active = False
+                    self.buttons[bind_name].pending_state = False
+
+                self.key_is_pressed[key_name] = False
 
         for bind_name, bind_value in self.key_binds.items():
             if isinstance(bind_value, tuple):
@@ -87,3 +91,7 @@ class ButtonManager(object):
             else:
                 keyboard.on_press_key(keyboard.parse_hotkey(bind_value), on_press_key, True)
                 keyboard.on_release_key(keyboard.parse_hotkey(bind_value), on_release_key, True)
+
+    def update(self):
+        for button in self.buttons.values():
+            button.update()
