@@ -12,18 +12,19 @@ from safe_grounded_down_b_logic import SafeGroundedDownBLogic
 from backdash_out_of_crouch_fix import BackdashOutOfCrouchFix
 from soft_direction_logic import SoftDirectionLogic
 from a_tilt_logic import ATiltLogic
+from modifier_angle_manager import ModifierAngleManager
 
 
 use_short_hop = True
 
 key_binds = {
-    "up" : "w",
+    "up" : ("w", "enter"),
     "down" : "s",
     "right" : "d",
     "left" : "a",
     "soft_left" : "q",
     "soft_right" : "e",
-    "mod1" : "shift",
+    "mod1" : "space",
     "mod2" : "alt",
 
     "disable_tilt" : "tab",
@@ -90,6 +91,7 @@ air_dodge_logic = AirDodgeLogic(buttons, outputs)
 backdash_out_of_crouch_fix = BackdashOutOfCrouchFix(buttons, outputs)
 soft_direction_logic = SoftDirectionLogic(buttons, outputs)
 a_tilt_logic = ATiltLogic(buttons, outputs)
+modifier_angle_manager = ModifierAngleManager(buttons, outputs)
 
 
 ls_x_raw = ButtonAxis()
@@ -136,6 +138,7 @@ while True:
     light_shield_logic.update()
     backdash_out_of_crouch_fix.update()
     safe_grounded_down_b_logic.update()
+    modifier_angle_manager.update()
     shield_tilt_logic.update()
     soft_direction_logic.update()
     air_dodge_logic.update()
