@@ -51,6 +51,8 @@ key_binds = {
     "air_dodge" : "right alt",
 
     "start" : "5",
+
+    "toggle_script" : "8",
 }
 
 outputs = {
@@ -100,6 +102,8 @@ c_x_raw = ButtonAxis()
 c_y_raw = ButtonAxis()
 
 
+script_is_disabled = False
+
 while True:
     button_manager.update()
 
@@ -148,6 +152,14 @@ while True:
     c_diagonal = (buttons["c_left"].is_active or buttons["c_right"].is_active) and (buttons["c_up"].is_active or buttons["c_down"].is_active)
     if c_diagonal:
         outputs["c_y"] = outputs["c_y"] * 0.5
+
+    # Allow the script to be toggled on and off with a key.
+    if buttons["toggle_script"].just_activated:
+        if script_is_disabled:
+            button_manager.bind_keys()
+        else:
+            button_manager.unbind_keys()
+        script_is_disabled = not script_is_disabled
 
     controller.send_outputs(outputs)
 
