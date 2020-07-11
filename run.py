@@ -28,7 +28,7 @@ key_binds = {
 
     "c_up" : "p",
     "c_down" : "/",
-    "c_right" : "'",
+    "c_right" : ".",
     "c_left" : "l",
 
     "d_up" : "g",
@@ -37,13 +37,13 @@ key_binds = {
     "d_left" : "v",
 
     "short_hop" : "[",
-    "full_hop" : "\\",
+    "full_hop" : "'",
 
     "a" : "right windows",
     "b" : ";",
     "z" : "]",
 
-    "shield" : "space",
+    "shield" : "\\",
     "light_shield" : "-",
     "air_dodge" : "right alt",
 

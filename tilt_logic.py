@@ -21,7 +21,7 @@ class TiltLogic(object):
         if buttons["tilt"].is_active and reset_tilt:
             self.tilt_time = time.perf_counter()
 
-        if buttons["tilt"].is_active and time.perf_counter() - self.tilt_time <= 0.117:
+        if time.perf_counter() - self.tilt_time <= 0.117:
             self.outputs["ls_x"] = self.tilt_axis(self.outputs["ls_x"])
             self.outputs["ls_y"] = self.tilt_axis(self.outputs["ls_y"])
 
