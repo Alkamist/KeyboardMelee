@@ -25,9 +25,9 @@ class ShieldTiltLogic(object):
             self.shield_tilt_time = time.perf_counter()
 
         if self.is_tilting_shield and not buttons["air_dodge"].is_active:
-            if time.perf_counter() - self.shield_tilt_time < 0.100:
+            if time.perf_counter() - self.shield_tilt_time < 0.117:
                 self.outputs["ls_x"] = self.outputs["ls_x_raw"] * self.x_level
-                if buttons["mod1"].is_active:
+                if buttons["tilt"].is_active:
                     self.outputs["ls_y"] = self.outputs["ls_y_raw"] * self.y_tilt_level
                 else:
                     self.outputs["ls_y"] = self.outputs["ls_y_raw"] * self.y_level

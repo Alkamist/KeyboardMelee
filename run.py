@@ -10,8 +10,8 @@ from shield_tilt_logic import ShieldTiltLogic
 from air_dodge_logic import AirDodgeLogic
 from safe_grounded_down_b_logic import SafeGroundedDownBLogic
 from backdash_out_of_crouch_fix import BackdashOutOfCrouchFix
-from soft_direction_logic import SoftDirectionLogic
 from a_tilt_logic import ATiltLogic
+from tilt_logic import TiltLogic
 from modifier_angle_manager import ModifierAngleManager
 
 
@@ -22,12 +22,9 @@ key_binds = {
     "down" : "s",
     "right" : "d",
     "left" : "a",
-    "soft_left" : "q",
-    "soft_right" : "e",
-    "mod1" : "space",
-    "mod2" : "alt",
-
-    "disable_tilt" : "tab",
+    "tilt" : "caps lock",
+    "x_mod" : "alt",
+    "y_mod" : "shift",
 
     "c_up" : "p",
     "c_down" : "/",
@@ -46,7 +43,7 @@ key_binds = {
     "b" : ";",
     "z" : "]",
 
-    "shield" : "caps lock",
+    "shield" : "space",
     "light_shield" : "-",
     "air_dodge" : "right alt",
 
@@ -91,8 +88,8 @@ safe_grounded_down_b_logic = SafeGroundedDownBLogic(buttons, outputs)
 shield_tilt_logic = ShieldTiltLogic(buttons, outputs)
 air_dodge_logic = AirDodgeLogic(buttons, outputs)
 backdash_out_of_crouch_fix = BackdashOutOfCrouchFix(buttons, outputs)
-soft_direction_logic = SoftDirectionLogic(buttons, outputs)
 a_tilt_logic = ATiltLogic(buttons, outputs)
+tilt_logic = TiltLogic(buttons, outputs)
 modifier_angle_manager = ModifierAngleManager(buttons, outputs)
 
 
@@ -120,7 +117,7 @@ while True:
     outputs["d_down"] = buttons["d_down"].is_active
     outputs["d_up"] = buttons["d_up"].is_active
 
-    ls_x_raw.update(buttons["left"].is_active or buttons["soft_left"].is_active, buttons["right"].is_active or buttons["soft_right"].is_active)
+    ls_x_raw.update(buttons["left"].is_active, buttons["right"].is_active)
     outputs["ls_x_raw"] = ls_x_raw.value
     outputs["ls_x"] = ls_x_raw.value
 
@@ -141,10 +138,10 @@ while True:
 
     light_shield_logic.update()
     backdash_out_of_crouch_fix.update()
+    tilt_logic.update()
     safe_grounded_down_b_logic.update()
     modifier_angle_manager.update()
     shield_tilt_logic.update()
-    soft_direction_logic.update()
     air_dodge_logic.update()
     a_tilt_logic.update()
 

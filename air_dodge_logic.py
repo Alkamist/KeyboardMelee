@@ -15,8 +15,10 @@ class AirDodgeLogic(object):
     def update(self):
         buttons = self.buttons
 
-        waveland_long = (buttons["left"].is_active or buttons["right"].is_active) and not buttons["down"].is_active
-        waveland_short = (buttons["soft_left"].is_active or buttons["soft_right"].is_active) and not waveland_long
+        sideways = (buttons["left"].is_active or buttons["right"].is_active) and not buttons["down"].is_active
+
+        waveland_short = sideways and buttons["tilt"].is_active
+        waveland_long = sideways and not waveland_short
 
         if buttons["air_dodge"].just_activated:
             self.is_wavelanding = True

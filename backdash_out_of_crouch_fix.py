@@ -11,7 +11,8 @@ class BackdashOutOfCrouchFix(object):
     def update(self):
         buttons = self.buttons
 
-        if buttons["down"].is_active and (buttons["left"].just_activated or buttons["right"].just_activated):
+        if buttons["down"].is_active and (buttons["left"].just_activated or buttons["right"].just_activated) \
+        and not buttons["tilt"].is_active:
             self.delay_backdash = True
             self.backdash_time = time.perf_counter()
 

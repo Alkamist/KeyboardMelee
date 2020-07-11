@@ -13,8 +13,7 @@ class SafeGroundedDownBLogic(object):
     def update(self):
         buttons = self.buttons
 
-        if buttons["b"].just_activated and (buttons["down"].is_active or buttons["up"].is_active) \
-        and not (buttons["soft_left"].is_active or buttons["soft_right"].is_active):
+        if buttons["b"].just_activated and (buttons["down"].is_active or buttons["up"].is_active):
             self.is_doing_safe_b = True
             self.safe_b_time = time.perf_counter()
 
