@@ -21,7 +21,7 @@ class ATiltLogic(object):
                      or buttons["left"].is_active or buttons["right"].is_active
         any_c_button = buttons["c_up"].just_activated or buttons["c_down"].just_activated \
                     or buttons["c_left"].just_activated or buttons["c_right"].just_activated
-        should_do_tilt = is_holding_tilt_mod and any_c_button
+        should_do_tilt = is_holding_tilt_mod and (any_c_button or buttons["a"].just_activated)
 
         if should_do_tilt:
             self.tilt_time = time.perf_counter()
@@ -30,7 +30,7 @@ class ATiltLogic(object):
             or buttons["c_right"].is_active and buttons["left"].is_active:
                 self.delay_a_for = 0.035
             elif buttons["c_left"].is_active or buttons["c_right"].is_active \
-             and not any_direction:
+            and not any_direction:
                 self.delay_a_for = 0.017
             else:
                 self.should_press_a = True
