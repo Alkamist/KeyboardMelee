@@ -17,40 +17,6 @@ from modifier_angle_manager import ModifierAngleManager
 
 use_short_hop = True
 
-#key_binds = {
-#    "up" : ("w", "enter"),
-#    "down" : "s",
-#    "right" : "d",
-#    "left" : "a",
-#    "tilt" : "caps lock",
-#    "x_mod" : "alt",
-#    "y_mod" : "shift",
-#
-#    "c_up" : "p",
-#    "c_down" : "/",
-#    "c_right" : ".",
-#    "c_left" : "l",
-#
-#    "d_up" : "g",
-#    "d_down" : "b",
-#    "d_right" : "n",
-#    "d_left" : "v",
-#
-#    "short_hop" : "[",
-#    "full_hop" : "'",
-#
-#    "a" : "right windows",
-#    "b" : ";",
-#    "z" : "]",
-#
-#    "shield" : "\\",
-#    "light_shield" : "-",
-#    "air_dodge" : "right alt",
-#
-#    "start" : "5",
-#
-#    "toggle_script" : "8",
-#}
 key_binds = {
     "up" : ("w", "enter"),
     "down" : "s",
