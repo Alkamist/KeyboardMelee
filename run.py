@@ -24,7 +24,7 @@ key_binds = {
     "left" : "a",
     "tilt" : "caps lock",
     "x_mod" : "alt",
-    "y_mod" : "shift",
+    "y_mod" : "space",
 
     "c_up" : "p",
     "c_down" : "'",
@@ -36,15 +36,15 @@ key_binds = {
     "d_right" : "n",
     "d_left" : "v",
 
-    "short_hop" : "[",
+    "short_hop" : ("[", "-"),
     "full_hop" : "\\",
 
     "a" : "right windows",
     "b" : ";",
-    "z" : "backspace",
+    "z" : "=",
 
     "shield" : "]",
-    "light_shield" : "-",
+    "light_shield" : "backspace",
     "air_dodge" : "right alt",
 
     "start" : "5",
@@ -146,9 +146,9 @@ while True:
     a_tilt_logic.update()
 
     # Allow for angled smashes when doing diagonal c inputs.
-    c_diagonal = (buttons["c_left"].is_active or buttons["c_right"].is_active) and (buttons["c_up"].is_active or buttons["c_down"].is_active)
+    c_diagonal = (buttons["c_left"].is_active or buttons["c_right"].is_active) and (buttons["up"].is_active or buttons["down"].is_active)
     if c_diagonal:
-        outputs["c_y"] = outputs["c_y"] * 0.5
+        outputs["c_y"] = outputs["ls_y_raw"] * 0.4
 
     # Allow the script to be toggled on and off with a key.
     if buttons["toggle_script"].just_activated:

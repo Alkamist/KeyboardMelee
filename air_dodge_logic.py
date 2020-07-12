@@ -29,7 +29,7 @@ class AirDodgeLogic(object):
             self.is_wavelanding = True
             self.waveland_time = time.perf_counter()
 
-        if self.is_wavelanding:
+        if self.is_wavelanding and not buttons["up"].is_active:
             if time.perf_counter() - self.waveland_time < 0.051:
                 if waveland_long:
                     self.outputs["ls_x"] = self.outputs["ls_x_raw"] * self.x_level_long
