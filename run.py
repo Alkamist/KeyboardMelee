@@ -27,8 +27,8 @@ key_binds = {
     "y_mod" : "shift",
 
     "c_up" : "p",
-    "c_down" : "/",
-    "c_right" : ".",
+    "c_down" : "'",
+    "c_right" : "/",
     "c_left" : "l",
 
     "d_up" : "g",
@@ -41,7 +41,7 @@ key_binds = {
 
     "a" : "right windows",
     "b" : ";",
-    "z" : "'",
+    "z" : "backspace",
 
     "shield" : "]",
     "light_shield" : "-",

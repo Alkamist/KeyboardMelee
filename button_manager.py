@@ -78,6 +78,11 @@ class ButtonManager(object):
             keyboard.on_press_key(key, self._on_press_key, True)
             keyboard.on_release_key(key, self._on_release_key, True)
 
+        keyboard.block_key(".") # Prevent windows emoji menu.
+        keyboard.block_key("=") # Prevent windows magnifier.
+        keyboard.block_key("e") # Prevent windows explorer.
+        keyboard.block_key("q") # Prevent windows search.
+
     def unbind_keys(self):
         keyboard.unhook_all()
         script_toggle_key = keyboard.parse_hotkey(self.key_binds["toggle_script"])
