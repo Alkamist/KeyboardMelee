@@ -183,12 +183,13 @@ while True:
     outputs["ls_x"] = modifier_angle_logic.x_axis_output
     outputs["ls_y"] = modifier_angle_logic.y_axis_output
 
+    a_stick_condition = buttons["tilt"].is_active and not buttons["shield"].is_active
     a_stick.update(
         a_neutral=buttons["a"].is_active,
-        a_left=buttons["c_left"].is_active and buttons["tilt"].is_active,
-        a_right=buttons["c_right"].is_active and buttons["tilt"].is_active,
-        a_down=buttons["c_down"].is_active and buttons["tilt"].is_active,
-        a_up=buttons["c_up"].is_active and buttons["tilt"].is_active,
+        a_left=buttons["c_left"].is_active and a_stick_condition,
+        a_right=buttons["c_right"].is_active and a_stick_condition,
+        a_down=buttons["c_down"].is_active and a_stick_condition,
+        a_up=buttons["c_up"].is_active and a_stick_condition,
         ls_x_raw=ls_x_raw.value,
         ls_y_raw=ls_y_raw.value,
         ls_x=outputs["ls_x"],
@@ -197,7 +198,7 @@ while True:
     outputs["a"] = a_stick.a_state.is_active
     outputs["ls_x"] = a_stick.x_axis_output
     outputs["ls_y"] = a_stick.y_axis_output
-    if buttons["tilt"].is_active:
+    if a_stick_condition:
         outputs["c_x"] = 0.0
         outputs["c_y"] = 0.0
 
