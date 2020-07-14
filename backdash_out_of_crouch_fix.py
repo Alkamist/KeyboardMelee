@@ -1,28 +1,40 @@
 import time
 
+from state import State
+
 
 class BackdashOutOfCrouchFix(object):
-    def __init__(self, buttons, outputs):
-        self.buttons = buttons
-        self.outputs = outputs
-        self.backdash_time = 0.0
-        self.delay_backdash = False
+    def __init__(self):
+        self.x_axis_output = 0.0
 
-    def update(self):
-        buttons = self.buttons
+        self._backdash_time = 0.0
+        self._delay_backdash = False
+        self._down_state = State()
+        self._left_state = State()
+        self._right_state = State()
 
-        if buttons["down"].is_active and (buttons["left"].just_activated or buttons["right"].just_activated) \
-        and not buttons["tilt"].is_active:
-            self.delay_backdash = True
-            self.backdash_time = time.perf_counter()
+    def update(self, down, left, right, tilt, ls_x):
+        self._down_state.is_active = down
+        self._left_state.is_active = left
+        self._right_state.is_active = right
 
-        disable_if = buttons["a"].is_active or buttons["b"].is_active or buttons["z"].is_active or buttons["air_dodge"].is_active \
-                  or buttons["shield"].is_active or buttons["short_hop"].is_active or buttons["full_hop"].is_active
+        self._down_state.update()
+        self._left_state.update()
+        self._right_state.update()
 
-        if buttons["down"].just_deactivated or disable_if:
-            self.delay_backdash = False
+        if self._down_state.is_active and (self._left_state.just_activated or self._right_state.just_activated) and not tilt:
+            self._delay_backdash = True
+            self._backdash_time = time.perf_counter()
 
-        if self.delay_backdash:
-            self.outputs["ls_x"] = 0.0
-            if time.perf_counter() - self.backdash_time >= 0.1:
-                self.delay_backdash = False
+        #disable_if = buttons["a"].is_active or buttons["z"].is_active or buttons["air_dodge"].is_active \
+        #          or buttons["shield"].is_active or buttons["short_hop"].is_active or buttons["full_hop"].is_active
+
+        if self._down_state.just_deactivated:
+            self._delay_backdash = False
+
+        if self._delay_backdash:
+            self.x_axis_output = 0.0
+            if time.perf_counter() - self._backdash_time >= 0.1:
+                self._delay_backdash = False
+        else:
+            self.x_axis_output = ls_x

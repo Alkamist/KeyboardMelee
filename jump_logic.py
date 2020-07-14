@@ -1,46 +1,50 @@
 import time
 
+from state import State
+
 
 class JumpLogic(object):
-    def __init__(self, buttons, outputs):
-        self.buttons = buttons
-        self.outputs = outputs
-        self.is_full_hopping = False
-        self.is_short_hopping = False
-        self.short_hop_time = 0.0
-        self.full_hop_time = 0.0
+    def __init__(self):
         self.short_hop_output = False
         self.full_hop_output = False
 
-    def update(self):
-        buttons = self.buttons
+        self._is_full_hopping = False
+        self._is_short_hopping = False
+        self._short_hop_time = 0.0
+        self._full_hop_time = 0.0
+        self._short_hop_input = State()
+        self._full_hop_input = State()
 
-        start_short_hop = buttons["short_hop"].just_activated or (self.is_full_hopping and buttons["full_hop"].just_activated)
+    def update(self, short_hop, full_hop):
+        self._short_hop_input.is_active = short_hop
+        self._full_hop_input.is_active = full_hop
+        self._short_hop_input.update()
+        self._full_hop_input.update()
+
+
+        start_short_hop = self._short_hop_input.just_activated or (self._is_full_hopping and self._full_hop_input.just_activated)
 
         if start_short_hop:
             self.short_hop_output = True
-            self.is_short_hopping = True
-            self.short_hop_time = time.perf_counter()
+            self._is_short_hopping = True
+            self._short_hop_time = time.perf_counter()
 
-        if self.is_short_hopping and time.perf_counter() - self.short_hop_time >= 0.025:
+        if self._is_short_hopping and time.perf_counter() - self._short_hop_time >= 0.025:
             self.short_hop_output = False
-            self.is_short_hopping = False
+            self._is_short_hopping = False
 
-        start_full_hop = not self.is_full_hopping and buttons["full_hop"].just_activated
+        start_full_hop = not self._is_full_hopping and self._full_hop_input.just_activated
 
         if start_full_hop:
-            self.is_full_hopping = True
+            self._is_full_hopping = True
             self.full_hop_output = True
-            self.full_hop_time = time.perf_counter()
+            self._full_hop_time = time.perf_counter()
 
-        if self.is_full_hopping and not buttons["full_hop"].is_active:
-            if time.perf_counter() - self.full_hop_time >= 0.134:
+        if self._is_full_hopping and not self._full_hop_input.is_active:
+            if time.perf_counter() - self._full_hop_time >= 0.134:
                 self.full_hop_output = False
 
             # Wait one extra frame so you can't miss a double jump by
             # pushing the full hop button on the same frame of release.
-            if time.perf_counter() - self.full_hop_time >= 0.150:
-                self.is_full_hopping = False
-
-        self.outputs["y"] = self.short_hop_output
-        self.outputs["x"] = self.full_hop_output
+            if time.perf_counter() - self._full_hop_time >= 0.150:
+                self._is_full_hopping = False

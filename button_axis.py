@@ -9,8 +9,8 @@ class ButtonAxis(object):
         self.high_state = State()
 
     def update(self, low, high):
-        self.low_state.pending_state = low
-        self.high_state.pending_state = high
+        self.low_state.is_active = low
+        self.high_state.is_active = high
         self.low_state.update()
         self.high_state.update()
 

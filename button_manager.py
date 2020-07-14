@@ -95,7 +95,7 @@ class ButtonManager(object):
         if key_name in self.key_binds_reversed:
             self.key_is_pressed[key_name] = True
             bind_name = self.key_binds_reversed[key_name]
-            self.buttons[bind_name].pending_state = True
+            self.buttons[bind_name].is_active = True
 
     def _on_release_key(self, key):
         key_name = get_base_key(key.name)
@@ -110,6 +110,6 @@ class ButtonManager(object):
                         another_same_bind_is_pressed = True
 
             if not another_same_bind_is_pressed:
-                self.buttons[bind_name].pending_state = False
+                self.buttons[bind_name].is_active = False
 
             self.key_is_pressed[key_name] = False
