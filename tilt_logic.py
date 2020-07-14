@@ -11,10 +11,10 @@ class TiltLogic(object):
         self._y_axis = TiltAxis(tilt_level, minimum_active_value)
 
     def update(self, tilt_modifier, ls_x, ls_y):
-        self._x_axis.update(ls_x)
-        self._y_axis.update(ls_y)
+        self._x_axis.update(ls_x, False, tilt_modifier)
+        self._y_axis.update(ls_y, False, tilt_modifier)
 
-        if tilt_modifier:
+        if self._x_axis.is_tilting or self._y_axis.is_tilting:
             self.x_axis_output = self._x_axis.value
             self.y_axis_output = self._y_axis.value
         else:

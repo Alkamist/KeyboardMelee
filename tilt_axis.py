@@ -15,13 +15,14 @@ class TiltAxis(object):
         self.value = 0.0
         self.tilt_level = tilt_level
         self.minimum_active_value = minimum_active_value
+        self.is_tilting = False
 
         self._tilt_time = 0.0
         self._input_value = 0.0
         self._input_previous_value = 0.0
         self._external_reset_state = State()
 
-    def update(self, input_value, external_reset_state=False):
+    def update(self, input_value, external_reset_state=False, external_reset_requirement=True):
         self._input_previous_value = self._input_value
         self._input_value = input_value
 
@@ -33,9 +34,10 @@ class TiltAxis(object):
         reset_tilt_on_activation = input_value_is_active and not input_previous_value_is_active
         reset_tilt_on_center_cross = input_value_is_active and input_previous_value_is_active \
                                  and sign(self._input_value) != sign(self._input_previous_value)
-        reset_tilt = reset_tilt_on_activation or reset_tilt_on_center_cross or self._external_reset_state.just_activated
+        reset_tilt = external_reset_requirement and (reset_tilt_on_activation or reset_tilt_on_center_cross or self._external_reset_state.just_activated)
 
         if reset_tilt:
+            self.is_tilting = True
             self._tilt_time = time.perf_counter()
 
         if time.perf_counter() - self._tilt_time <= 0.117:
@@ -47,3 +49,4 @@ class TiltAxis(object):
                 self.value = 0.0
         else:
             self.value = self._input_value
+            self.is_tilting = False
