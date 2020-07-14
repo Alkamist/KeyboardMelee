@@ -53,8 +53,8 @@ class BStick(object):
         self._y_axis.update(self._b_down.is_active, self._b_up.is_active)
 
         if time.perf_counter() - self._activation_time <= self._axis_hold_duration:
-            should_bias_x = self._b_down.is_active or self._b_up.is_active
-            x_bias = 0.35 * ls_x_raw if should_bias_x else 0.0
+            should_bias_x = self._b_down.is_active or self._b_up.is_active or (ls_x_raw != 0.0 and self._b_neutral.is_active)
+            x_bias = 0.2875 * ls_x_raw if should_bias_x else 0.0
             self.x_axis_output = self._x_axis.value + x_bias
             self.y_axis_output = self._y_axis.value * 0.6 if self._y_axis.value < 0.0 else self._y_axis.value
 
