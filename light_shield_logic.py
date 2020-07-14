@@ -2,23 +2,28 @@ from state import State
 
 
 class LightShieldLogic(object):
-    def __init__(self, buttons, outputs):
-        self.buttons = buttons
-        self.outputs = outputs
+    def __init__(self):
+        self.shield_output = False
+        self.light_shield_output = 0
         self.is_light_shielding = False
+        self._light_shield_state = State()
+        self._shield_state = State()
 
-    def update(self):
-        buttons = self.buttons
+    def update(self, shield, light_shield):
+        self._light_shield_state.is_active = light_shield
+        self._shield_state.is_active = shield
+        self._light_shield_state.update()
+        self._shield_state.update()
 
-        if buttons["shield"].is_active and buttons["light_shield"].just_activated:
+        if self._shield_state.is_active and self._light_shield_state.just_activated:
             self.is_light_shielding = not self.is_light_shielding
 
-        if buttons["shield"].just_deactivated:
+        if self._shield_state.just_deactivated:
             self.is_light_shielding = False
 
         if self.is_light_shielding:
-            self.outputs["l"] = False
-            self.outputs["l_analog"] = 43
+            self.shield_output = False
+            self.light_shield_output = 43
         else:
-            self.outputs["l"] = buttons["shield"].is_active
-            self.outputs["l_analog"] = 0
+            self.shield_output = shield
+            self.light_shield_output = 0

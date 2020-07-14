@@ -5,7 +5,7 @@ from game_controller import GameController
 from state import State
 from button_axis import ButtonAxis
 from jump_logic import JumpLogic
-#from light_shield_logic import LightShieldLogic
+from light_shield_logic import LightShieldLogic
 from shield_tilt_logic import ShieldTiltLogic
 from air_dodge_logic import AirDodgeLogic
 from backdash_out_of_crouch_fix import BackdashOutOfCrouchFix
@@ -49,7 +49,7 @@ key_binds = {
     "b_neutral" : ".",
 
     "shield" : "]",
-    "light_shield" : "0",
+    "light_shield" : "tab",
     "air_dodge" : "right alt",
 
     "start" : "5",
@@ -88,7 +88,7 @@ button_manager = ButtonManager(key_binds)
 buttons = button_manager.buttons
 
 jump_logic = JumpLogic()
-#light_shield_logic = LightShieldLogic(buttons, outputs)
+light_shield_logic = LightShieldLogic()
 shield_tilt_logic = ShieldTiltLogic()
 air_dodge_logic = AirDodgeLogic()
 backdash_out_of_crouch_fix = BackdashOutOfCrouchFix()
@@ -146,7 +146,12 @@ while True:
         outputs["y"] = jump_logic.short_hop_output
         outputs["x"] = jump_logic.full_hop_output
 
-    #light_shield_logic.update()
+    light_shield_logic.update(
+        shield=buttons["shield"].is_active,
+        light_shield=buttons["light_shield"].is_active,
+    )
+    outputs["l"] = light_shield_logic.shield_output
+    outputs["l_analog"] = light_shield_logic.light_shield_output
 
     backdash_out_of_crouch_fix.update(
         down=buttons["down"].is_active,
