@@ -11,7 +11,7 @@ from air_dodge_logic import AirDodgeLogic
 from backdash_out_of_crouch_fix import BackdashOutOfCrouchFix
 from a_stick import AStick
 from b_stick import BStick
-from tilt_logic import TiltLogic
+from tilt_stick import TiltStick
 from modifier_angle_logic import ModifierAngleLogic
 
 
@@ -94,7 +94,7 @@ air_dodge_logic = AirDodgeLogic()
 backdash_out_of_crouch_fix = BackdashOutOfCrouchFix()
 a_stick = AStick()
 b_stick = BStick()
-tilt_logic = TiltLogic()
+tilt_stick = TiltStick()
 modifier_angle_logic = ModifierAngleLogic()
 
 
@@ -164,14 +164,6 @@ while True:
             or buttons["air_dodge"].is_active or buttons["a"].is_active):
         outputs["ls_x"] = backdash_out_of_crouch_fix.x_axis_output
 
-    shield_tilt_logic.update(
-        shield=buttons["shield"].is_active,
-        ls_x=outputs["ls_x"],
-        ls_y=outputs["ls_y"],
-    )
-    outputs["ls_x"] = shield_tilt_logic.x_axis_output
-    outputs["ls_y"] = shield_tilt_logic.y_axis_output
-
     modifier_angle_logic.update(
         x_mod=buttons["x_mod"].is_active,
         y_mod=buttons["y_mod"].is_active,
@@ -182,6 +174,14 @@ while True:
     )
     outputs["ls_x"] = modifier_angle_logic.x_axis_output
     outputs["ls_y"] = modifier_angle_logic.y_axis_output
+
+    shield_tilt_logic.update(
+        shield=buttons["shield"].is_active,
+        ls_x=outputs["ls_x"],
+        ls_y=outputs["ls_y"],
+    )
+    outputs["ls_x"] = shield_tilt_logic.x_axis_output
+    outputs["ls_y"] = shield_tilt_logic.y_axis_output
 
     a_stick_condition = buttons["tilt"].is_active
     a_stick.update(
@@ -202,13 +202,13 @@ while True:
         outputs["c_x"] = 0.0
         outputs["c_y"] = 0.0
 
-    tilt_logic.update(
+    tilt_stick.update(
         tilt_modifier=buttons["tilt"].is_active,
         ls_x=outputs["ls_x"],
         ls_y=outputs["ls_y"],
     )
-    outputs["ls_x"] = tilt_logic.x_axis_output
-    outputs["ls_y"] = tilt_logic.y_axis_output
+    outputs["ls_x"] = tilt_stick.x_axis_output
+    outputs["ls_y"] = tilt_stick.y_axis_output
 
     b_stick.update(
         b_neutral=buttons["b_neutral"].is_active,
