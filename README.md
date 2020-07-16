@@ -52,6 +52,10 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Left B**: Use your middle finger to press the - key.
 - **Right B**: Use your middle finger to press the = key.
 - **Down B**: Use your index finger to press the ; key.
+- **Roll**: Hold Shield and press the L or / key. Do not hold Caps Lock.
+- **Spot Dodge**: Hold Shield and press the ' key. Do not hold Caps Lock.
+- **Ledge Dash**: Push either A or D, whichever one is facing away from the ledge, then hold toward the stage and jump, then push Right Alt to air dodge in.
+- **Wall Tech**: You can't smash DI while holding shield since it slows the control stick to prevent accidental rolls. Instead, you can hold Right Alt and do the smash DI.
 - **Toggle Script**: Press the 8 key.
 - **Start**: Press the 5 key.
 - **D Pad**: Use the G, V, B, and N keys.
