@@ -41,6 +41,7 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W to angle it.
 - **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W to angle it.
 - **Down Smash/Down Aerial**: Use your index finger to press the ' Key.
+- **Charged Smashes**: You can press the Right Windows key to hold A right after doing a smash, which should make it charge while holding A. It is a little awkward so I've been thinking about making a modifier key somewhere that will charge smashes.
 - **Jab/Neutral Aerial**: Use your right thumb to press the Right Windows Key. Note that if you don't have a Right Windows key on your keyboard, you might need to do some button rebinds to put this somewhere else.
 - **Up Tilt**: Hold Caps Lock and use your right index finger to press the P key.
 - **Left Tilt**: Hold Caps Lock and use your right index finger to press the L key, use S or W to angle it.
@@ -61,5 +62,3 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - The script should block the keys it is using along with some others while it is running, however there are some annoying consequences of using the Right Windows key. Blocking that key doesn't seem to block some Windows shortcuts, and there is one in particular that is super annoying, which is Windows + L, which will log you out of your PC. You can disable this shortcut with a [registry edit](https://www.howtogeek.com/howto/windows-vista/disableenable-lock-workstation-functionality-windows-l/).
 - You should probably have the script running before booting up Dolphin so the controller calibrates correctly. If you are having problems light shielding this is probably because the controller did not calibrate correctly.
 - The script might sometimes complain that Right Alt is an unknown key. If this happens, keep trying to run the script until it stops complaining. If you can't get it to stop, try deleting the "__ pycache__" folder in the directory. I have no idea why this happens and I haven't been able to figure out a fix for it.
-
-
