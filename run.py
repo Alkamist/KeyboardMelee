@@ -12,13 +12,12 @@ from backdash_out_of_crouch_fix import BackdashOutOfCrouchFix
 from safe_grounded_down_b_logic import SafeGroundedDownBLogic
 from tilt_stick import TiltStick
 from modifier_angle_logic import ModifierAngleLogic
-from b_stick import BStick
 
 
 use_short_hop = True
 
 key_binds = {
-    "up" : "w",
+    "up" : ("w", "backspace"),
     "down" : "s",
     "right" : "d",
     "left" : "a",
@@ -42,8 +41,6 @@ key_binds = {
     "a" : "right windows",
     "b" : "right alt",
     "z" : "=",
-
-    "b_up" : "backspace",
 
     "shield" : "]",
     "light_shield" : "tab",
@@ -92,7 +89,6 @@ backdash_out_of_crouch_fix = BackdashOutOfCrouchFix()
 tilt_stick = TiltStick()
 modifier_angle_logic = ModifierAngleLogic()
 safe_grounded_down_b_logic = SafeGroundedDownBLogic()
-b_stick = BStick()
 
 
 ls_x_raw = ButtonAxis()
@@ -199,21 +195,6 @@ while True:
     )
     outputs["ls_x"] = safe_grounded_down_b_logic.x_axis_output
     outputs["ls_y"] = safe_grounded_down_b_logic.y_axis_output
-
-    b_stick.update(
-        b_neutral=False,
-        b_left=False,
-        b_right=False,
-        b_down=False,
-        b_up=buttons["b_up"].is_active,
-        ls_x_raw=ls_x_raw.value,
-        ls_x=outputs["ls_x"],
-        ls_y=outputs["ls_y"],
-    )
-    if buttons["b_up"].is_active:
-        outputs["b"] = b_stick.b_state.is_active
-    outputs["ls_x"] = b_stick.x_axis_output
-    outputs["ls_y"] = b_stick.y_axis_output
 
     air_dodge_logic.update(
         air_dodge=buttons["air_dodge"].is_active,

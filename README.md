@@ -2,9 +2,7 @@
 
 This is a Python script I wrote for Windows that is designed to allow quick and controlled gameplay of Super Smash Bros. Melee on the keyboard. It works by getting your input from the keyboard, processing it, and sending the result to a third party driver called [vJoy](http://vjoystick.sourceforge.net/site/index.php/download-a-install/download). This simulates a gamepad that is visible to the Dolphin emulator.
 
-My goal with this project was to try to create the most intuitive digital control scheme I could possibly think of to play platform fighters. While, in my opinion, there is nothing truly game breaking about what I've done, I have had to facilitate some of the intuitive feel behind the controller with the use of very simple macros. Most purists would probably vote for this to not be tournament legal, but I didn't make this script with that as a concern.
-
-This is mainly designed as a study of how digital control schemes can work with platform fighters, and as a gateway for experimentation in this regard without having to invest in expensive specialized hardware.
+My goal with this project was to try to create the most intuitive digital control scheme I could possibly think of to play platform fighters. This is mainly designed as a study of how digital control schemes can work with platform fighters, and as a gateway for experimentation in this regard without having to invest in expensive specialized hardware.
 
 Note that if you are not using a mechanical keyboard, you will likely run into issues with not having [n-key rollover](https://en.wikipedia.org/wiki/Rollover_(key)).
 
@@ -35,27 +33,26 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **L-Cancel**: Use your ring finger to press the ] key.
 - **Shield**: Use your ring finger to hold the ] key.
 - **Light Shield**: Press Tab while holding Shield to toggle Light Shield.
-- **Wavedash**: Jump with your middle finger on the [ key, and then use your right thumb to press Right Alt while holding a direction with WASD. Holding A or D will result in a max distance wavedash in the respective direction. Holding diagonally downward with WASD will result in a shorter wavedash. Holding Caps Lock while doing a wavedash will shorten the distance. Holding no direction will result in a wavedash straight downward.
-- **Grab**: Use your ring finger to press the Enter key.
+- **Wavedash**: Jump with your middle finger on the [ key, and then use your right index finger to press the ; key while holding a direction with WASD. Holding A or D will result in a max distance wavedash in the respective direction. Holding diagonally downward with WASD will result in a shorter wavedash. Holding Caps Lock while doing a wavedash will shorten the distance. Holding no direction will result in a wavedash straight downward.
+- **Grab**: Use your ring finger to press the = key. The - key will also short hop to allow for comfortable jump cancel grabs.
 - **Up Smash/Up Aerial**: Use your index finger to press the P Key.
+- **Down Smash/Down Aerial**: Use your index or middle finger to press the ' Key.
 - **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W to angle it.
 - **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W to angle it.
-- **Down Smash/Down Aerial**: Use your index finger to press the ' Key.
-- **Charged Smashes**: You can press the Right Windows key to hold A right after doing a smash, which should make it charge while holding A. It is a little awkward so I've been thinking about making a modifier key somewhere that will charge smashes.
 - **Jab/Neutral Aerial**: Use your right thumb to press the Right Windows Key. Note that if you don't have a Right Windows key on your keyboard, you might need to do some button rebinds to put this somewhere else.
-- **Up Tilt**: Hold Caps Lock and use your right index finger to press the P key.
-- **Left Tilt**: Hold Caps Lock and use your right index finger to press the L key, use S or W to angle it.
-- **Right Tilt**: Hold Caps Lock and use your right index finger to press the / key, use S or W to angle it.
-- **Down Tilt**: Hold Caps Lock and use your right index finger to press the ' key.
-- **Neutral B**: Use your index finger to press the . key.
-- **Up B**: Use your ring finger or pinky to press the Backspace key.
-- **Left B**: Use your middle finger to press the - key.
-- **Right B**: Use your middle finger to press the = key.
-- **Down B**: Use your index finger to press the ; key.
-- **Roll**: Hold Shield and press the L or / key. Do not hold Caps Lock.
-- **Spot Dodge**: Hold Shield and press the ' key. Do not hold Caps Lock.
-- **Ledge Dash**: Push either A or D, whichever one is facing away from the ledge, then hold toward the stage and jump, then push Right Alt to air dodge in.
-- **Wall Tech**: You can't smash DI while holding shield since it slows the control stick to prevent accidental rolls. Instead, you can hold Right Alt and do the smash DI.
+- **Up Tilt**: Hold Caps Lock and the W key and press the Right Windows Key, holding the Space Bar will allow for quick turnaround up tilts.
+- **Down Tilt**: Hold Caps Lock and the S key and press the Right Windows Key, holding the Space Bar will allow for quick turnaround down tilts.
+- **Left Tilt**: Hold Caps Lock and the A key and press the Right Windows Key. Holding W or S will angle the tilt.
+- **Right Tilt**: Hold Caps Lock and the D key and press the Right Windows Key. Holding W or S will angle the tilt.
+- **Neutral B**: Don't hold any WASD direction and press the Right Alt key.
+- **Up B**: Hold the W key or Backspace and press the Right Alt key.
+- **Left B**: Hold the A key and press the Right Alt key.
+- **Right B**: Hold the D key and press the Right Alt key.
+- **Down B**: Hold the S key and press the Right Alt key.
+- **Roll**: Hold Shield and press the L or / key.
+- **Spot Dodge**: Hold Shield and press the ' key.
+- **Ledge Dash**: Press either A or D, whichever one is facing away from the ledge, then hold toward the stage and jump, then press the ; key to air dodge in.
+- **Wall Tech**: You can't smash DI while holding shield since it slows the control stick to prevent accidental rolls. Instead, you can hold the ; key to tech while doing the smash DI input.
 - **Toggle Script**: Press the 8 key.
 - **Start**: Press the 5 key.
 - **D Pad**: Use the G, V, B, and N keys.
