@@ -32,6 +32,8 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Full Hop**: Use your pinky to press the \\ key.
 - **L-Cancel**: Use your ring finger to press the ] key.
 - **Shield**: Use your ring finger to hold the ] key.
+- **Shield Drop**: Hold shield and press the S key.
+- **Tilt Shield**: Hold Caps Lock and use WASD to tilt your shield without shield dropping on a platform.
 - **Light Shield**: Press Tab while holding Shield to toggle Light Shield.
 - **Wavedash**: Jump with your middle finger on the [ key, and then use your right index finger to press the ; key while holding a direction with WASD. Holding A or D will result in a max distance wavedash in the respective direction. Holding diagonally downward with WASD will result in a shorter wavedash. Holding Caps Lock while doing a wavedash will shorten the distance. Holding no direction will result in a wavedash straight downward.
 - **Grab**: Use your ring finger to press the = key. The - key will also short hop to allow for comfortable jump cancel grabs.
@@ -46,9 +48,9 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Right Tilt**: Hold Caps Lock and the D key and press the Right Windows Key. Holding W or S will angle the tilt.
 - **Neutral B**: Don't hold any WASD direction and press the Right Alt key.
 - **Up B**: Hold the W key or Backspace and press the Right Alt key.
+- **Down B**: Hold the S key and press the Right Alt key.
 - **Left B**: Hold the A key and press the Right Alt key.
 - **Right B**: Hold the D key and press the Right Alt key.
-- **Down B**: Hold the S key and press the Right Alt key.
 - **Roll**: Hold Shield and press the L or / key.
 - **Spot Dodge**: Hold Shield and press the ' key.
 - **Ledge Dash**: Press either A or D, whichever one is facing away from the ledge, then hold toward the stage and jump, then press the ; key to air dodge in.
