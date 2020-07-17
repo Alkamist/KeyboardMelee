@@ -9,61 +9,22 @@ from light_shield_logic import LightShieldLogic
 from shield_tilt_logic import ShieldTiltLogic
 from air_dodge_logic import AirDodgeLogic
 from backdash_out_of_crouch_fix import BackdashOutOfCrouchFix
-from a_stick import AStick
-from b_stick import BStick
+from safe_grounded_down_b_logic import SafeGroundedDownBLogic
 from tilt_stick import TiltStick
 from modifier_angle_logic import ModifierAngleLogic
+from b_stick import BStick
 
 
 use_short_hop = True
 
-#key_binds = {
-#    "up" : "w",
-#    "down" : "s",
-#    "right" : "d",
-#    "left" : "a",
-#    "tilt" : "caps lock",
-#    "x_mod" : "alt",
-#    "y_mod" : "space",
-#
-#    "c_up" : "p",
-#    "c_down" : "'",
-#    "c_right" : "/",
-#    "c_left" : "l",
-#
-#    "d_up" : "g",
-#    "d_down" : "b",
-#    "d_right" : "n",
-#    "d_left" : "v",
-#
-#    "short_hop" : "[",
-#    "full_hop" : "\\",
-#
-#    "a" : "right windows",
-#    "z" : "enter",
-#
-#    "b_up" : "backspace",
-#    "b_down" : ";",
-#    "b_right" : "=",
-#    "b_left" : "-",
-#    "b_neutral" : ".",
-#
-#    "shield" : "]",
-#    "light_shield" : "tab",
-#    "air_dodge" : "right alt",
-#
-#    "start" : "5",
-#
-#    "toggle_script" : "8",
-#}
 key_binds = {
     "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
     "tilt" : "caps lock",
-    "x_mod" : "alt",
-    "y_mod" : "space",
+    "x_mod" : "space",
+    "y_mod" : "alt",
 
     "c_up" : "p",
     "c_down" : "'",
@@ -79,11 +40,10 @@ key_binds = {
     "full_hop" : "\\",
 
     "a" : "right windows",
+    "b" : "right alt",
     "z" : "=",
 
     "b_up" : "backspace",
-    "b_neutral_down" : "right alt",
-    "b_side" : "enter",
 
     "shield" : "]",
     "light_shield" : "tab",
@@ -129,10 +89,10 @@ light_shield_logic = LightShieldLogic()
 shield_tilt_logic = ShieldTiltLogic()
 air_dodge_logic = AirDodgeLogic()
 backdash_out_of_crouch_fix = BackdashOutOfCrouchFix()
-a_stick = AStick()
-b_stick = BStick()
 tilt_stick = TiltStick()
 modifier_angle_logic = ModifierAngleLogic()
+safe_grounded_down_b_logic = SafeGroundedDownBLogic()
+b_stick = BStick()
 
 
 ls_x_raw = ButtonAxis()
@@ -142,13 +102,12 @@ c_y_raw = ButtonAxis()
 
 
 script_is_disabled = False
-last_direction_is_right = True
 
 while True:
     button_manager.update()
 
     outputs["a"] = buttons["a"].is_active
-    outputs["b"] = False
+    outputs["b"] = buttons["b"].is_active
     outputs["x"] = buttons["full_hop"].is_active
     outputs["y"] = buttons["short_hop"].is_active
     outputs["z"] = buttons["z"].is_active
@@ -221,25 +180,6 @@ while True:
     outputs["ls_x"] = shield_tilt_logic.x_axis_output
     outputs["ls_y"] = shield_tilt_logic.y_axis_output
 
-    a_stick_condition = buttons["tilt"].is_active
-    a_stick.update(
-        a_neutral=buttons["a"].is_active,
-        a_left=buttons["c_left"].is_active and a_stick_condition,
-        a_right=buttons["c_right"].is_active and a_stick_condition,
-        a_down=buttons["c_down"].is_active and a_stick_condition,
-        a_up=buttons["c_up"].is_active and a_stick_condition,
-        ls_x_raw=ls_x_raw.value,
-        ls_y_raw=ls_y_raw.value,
-        ls_x=outputs["ls_x"],
-        ls_y=outputs["ls_y"],
-    )
-    outputs["a"] = a_stick.a_state.is_active
-    outputs["ls_x"] = a_stick.x_axis_output
-    outputs["ls_y"] = a_stick.y_axis_output
-    if a_stick_condition:
-        outputs["c_x"] = 0.0
-        outputs["c_y"] = 0.0
-
     tilt_stick.update(
         tilt_modifier=buttons["tilt"].is_active,
         ls_x=outputs["ls_x"],
@@ -248,22 +188,30 @@ while True:
     outputs["ls_x"] = tilt_stick.x_axis_output
     outputs["ls_y"] = tilt_stick.y_axis_output
 
-    if ls_x_raw.value > 0.0:
-        last_direction_is_right = True
-    elif ls_x_raw.value < 0.0:
-        last_direction_is_right = False
+    safe_grounded_down_b_logic.update(
+        b=buttons["b"].is_active,
+        down=buttons["down"].is_active,
+        up=buttons["up"].is_active,
+        ls_x_raw=ls_x_raw.value,
+        ls_y_raw=ls_y_raw.value,
+        ls_x=outputs["ls_x"],
+        ls_y=outputs["ls_y"],
+    )
+    outputs["ls_x"] = safe_grounded_down_b_logic.x_axis_output
+    outputs["ls_y"] = safe_grounded_down_b_logic.y_axis_output
 
     b_stick.update(
-        b_neutral=buttons["b_neutral_down"].is_active and not buttons["down"].is_active,
-        b_left=buttons["b_side"].is_active and not last_direction_is_right,
-        b_right=buttons["b_side"].is_active and last_direction_is_right,
-        b_down=buttons["b_neutral_down"].is_active and buttons["down"].is_active,
+        b_neutral=False,
+        b_left=False,
+        b_right=False,
+        b_down=False,
         b_up=buttons["b_up"].is_active,
         ls_x_raw=ls_x_raw.value,
         ls_x=outputs["ls_x"],
         ls_y=outputs["ls_y"],
     )
-    outputs["b"] = b_stick.b_state.is_active
+    if buttons["b_up"].is_active:
+        outputs["b"] = b_stick.b_state.is_active
     outputs["ls_x"] = b_stick.x_axis_output
     outputs["ls_y"] = b_stick.y_axis_output
 
