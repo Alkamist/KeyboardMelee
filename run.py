@@ -17,6 +17,45 @@ from modifier_angle_logic import ModifierAngleLogic
 
 use_short_hop = True
 
+#key_binds = {
+#    "up" : "w",
+#    "down" : "s",
+#    "right" : "d",
+#    "left" : "a",
+#    "tilt" : "caps lock",
+#    "x_mod" : "alt",
+#    "y_mod" : "space",
+#
+#    "c_up" : "p",
+#    "c_down" : "'",
+#    "c_right" : "/",
+#    "c_left" : "l",
+#
+#    "d_up" : "g",
+#    "d_down" : "b",
+#    "d_right" : "n",
+#    "d_left" : "v",
+#
+#    "short_hop" : "[",
+#    "full_hop" : "\\",
+#
+#    "a" : "right windows",
+#    "z" : "enter",
+#
+#    "b_up" : "backspace",
+#    "b_down" : ";",
+#    "b_right" : "=",
+#    "b_left" : "-",
+#    "b_neutral" : ".",
+#
+#    "shield" : "]",
+#    "light_shield" : "tab",
+#    "air_dodge" : "right alt",
+#
+#    "start" : "5",
+#
+#    "toggle_script" : "8",
+#}
 key_binds = {
     "up" : "w",
     "down" : "s",
@@ -36,21 +75,19 @@ key_binds = {
     "d_right" : "n",
     "d_left" : "v",
 
-    "short_hop" : "[",
+    "short_hop" : ("[", "-"),
     "full_hop" : "\\",
 
     "a" : "right windows",
-    "z" : "enter",
+    "z" : "=",
 
     "b_up" : "backspace",
-    "b_down" : ";",
-    "b_right" : "=",
-    "b_left" : "-",
-    "b_neutral" : ".",
+    "b_neutral_down" : "right alt",
+    "b_side" : "enter",
 
     "shield" : "]",
     "light_shield" : "tab",
-    "air_dodge" : "right alt",
+    "air_dodge" : ";",
 
     "start" : "5",
 
@@ -105,6 +142,7 @@ c_y_raw = ButtonAxis()
 
 
 script_is_disabled = False
+last_direction_is_right = True
 
 while True:
     button_manager.update()
@@ -210,11 +248,16 @@ while True:
     outputs["ls_x"] = tilt_stick.x_axis_output
     outputs["ls_y"] = tilt_stick.y_axis_output
 
+    if ls_x_raw.value > 0.0:
+        last_direction_is_right = True
+    elif ls_x_raw.value < 0.0:
+        last_direction_is_right = False
+
     b_stick.update(
-        b_neutral=buttons["b_neutral"].is_active,
-        b_left=buttons["b_left"].is_active,
-        b_right=buttons["b_right"].is_active,
-        b_down=buttons["b_down"].is_active,
+        b_neutral=buttons["b_neutral_down"].is_active and not buttons["down"].is_active,
+        b_left=buttons["b_side"].is_active and not last_direction_is_right,
+        b_right=buttons["b_side"].is_active and last_direction_is_right,
+        b_down=buttons["b_neutral_down"].is_active and buttons["down"].is_active,
         b_up=buttons["b_up"].is_active,
         ls_x_raw=ls_x_raw.value,
         ls_x=outputs["ls_x"],
