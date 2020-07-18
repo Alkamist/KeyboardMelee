@@ -25,6 +25,8 @@ key_binds = {
     "x_mod" : "space",
     "y_mod" : "alt",
 
+    "invert_x" : "enter",
+
     "c_up" : "p",
     "c_down" : "'",
     "c_right" : "/",
@@ -130,6 +132,10 @@ while True:
     c_y_raw.update(buttons["c_down"].is_active, buttons["c_up"].is_active)
     outputs["c_y_raw"] = c_y_raw.value
     outputs["c_y"] = c_y_raw.value
+
+    if buttons["invert_x"].is_active:
+        outputs["ls_x_raw"] = -outputs["ls_x_raw"]
+        outputs["ls_x"] = -outputs["ls_x"]
 
     if use_short_hop:
         jump_logic.update(
