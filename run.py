@@ -216,10 +216,10 @@ while True:
     outputs["ls_x"] = air_dodge_logic.x_axis_output
     outputs["ls_y"] = air_dodge_logic.y_axis_output
 
-    # Allow for angled smashes when holding down or up on the left stick.
+    # Allow for angled smashes when holding down or up on the left stick and pressing tilt.
     c_diagonal = (buttons["c_left"].is_active or buttons["c_right"].is_active) and (buttons["up"].is_active or buttons["down"].is_active)
-    if c_diagonal:
-        outputs["c_y"] = ls_y_raw.value * 0.4
+    if c_diagonal and buttons["tilt"].is_active:
+        outputs["c_y"] = ls_y_raw.value * 0.7
 
     # Allow the script to be toggled on and off with a key.
     if buttons["toggle_script"].just_activated:
@@ -231,4 +231,4 @@ while True:
 
     controller.send_outputs(outputs)
 
-    time.sleep(0.001)
+    time.sleep(0.0001)

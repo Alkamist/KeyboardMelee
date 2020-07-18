@@ -39,8 +39,8 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Grab**: Use your ring finger to press the = key. The - key will also short hop to allow for comfortable jump cancel grabs.
 - **Up Smash/Up Aerial**: Use your index finger to press the P Key.
 - **Down Smash/Down Aerial**: Use your index or middle finger to press the ' Key.
-- **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W to angle it.
-- **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W to angle it.
+- **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W while holding Caps Lock to angle it.
+- **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W holding Caps Lock to angle it.
 - **Jab/Neutral Aerial**: Use your right thumb to press the Right Windows Key. Note that if you don't have a Right Windows key on your keyboard, you might need to do some button rebinds to put this somewhere else.
 - **Up Tilt**: Hold Caps Lock and the W key and press the Right Windows Key, holding the Space Bar will allow for quick turnaround up tilts.
 - **Down Tilt**: Hold Caps Lock and the S key and press the Right Windows Key, holding the Space Bar will allow for quick turnaround down tilts.
