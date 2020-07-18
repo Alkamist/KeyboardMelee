@@ -39,18 +39,18 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Grab**: Use your ring finger to press the = key. The - key will also short hop to allow for comfortable jump cancel grabs.
 - **Up Smash/Up Aerial**: Use your index finger to press the P Key.
 - **Down Smash/Down Aerial**: Use your index or middle finger to press the ' Key.
-- **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W while holding Caps Lock to angle it.
-- **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W holding Caps Lock to angle it.
+- **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W to angle it.
+- **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W to angle it.
 - **Jab/Neutral Aerial**: Use your right thumb to press the Right Windows Key. Note that if you don't have a Right Windows key on your keyboard, you might need to do some button rebinds to put this somewhere else.
-- **Up Tilt**: Hold Caps Lock and the W key and press the Right Windows Key, holding the Space Bar will allow for quick turnaround up tilts.
-- **Down Tilt**: Hold Caps Lock and the S key and press the Right Windows Key, holding the Space Bar will allow for quick turnaround down tilts.
-- **Left Tilt**: Hold Caps Lock and the A key and press the Right Windows Key. Holding W or S will angle the tilt.
-- **Right Tilt**: Hold Caps Lock and the D key and press the Right Windows Key. Holding W or S will angle the tilt.
+- **Up Tilt**: Hold Caps Lock and and press the P key.
+- **Down Tilt**: Hold Caps Lock and and press the ' key.
+- **Left Tilt**: Hold Caps Lock and and press the K key. Holding W or S will angle the tilt.
+- **Right Tilt**: Hold Caps Lock and and press the / key. Holding W or S will angle the tilt.
 - **Neutral B**: Don't hold any WASD direction and press the Right Alt key.
-- **Up B**: Hold the W key or Backspace and press the Right Alt key.
+- **Up B**: Press Backspace.
 - **Down B**: Hold the S key and press the Right Alt key.
-- **Left B**: Hold the A key and press the Right Alt key.
-- **Right B**: Hold the D key and press the Right Alt key.
+- **Left B**: Hold the A key and press the Enter key.
+- **Right B**: Hold the D key and press the Enter Key.
 - **Roll**: Hold Shield and press the L or / key.
 - **Spot Dodge**: Hold Shield and press the ' key.
 - **Ledge Dash**: Press either A or D, whichever one is facing away from the ledge, then hold toward the stage and jump, then press the ; key to air dodge in.
@@ -62,13 +62,13 @@ The bulk of the tutorial is probably best described by explaining how to perform
 
 ## Keybinds
 
-In order to change keybinds, you can open up the "run.py" file. Near the top of that file, there is a Python dictionary that can be edited to change the keybinds. In order to bind an action to multiple keys, you can pack multiple strings into a Python tuple (see the "up" action). Setting "use_short_hop" to False should cause the short hop button to behave like a normal X or Y button. There is probably a better way to do this that is more user friendly, but I haven't worked on that much yet.
+In order to change keybinds, you can open up the "run.py" file. Near the top of that file, there is a Python dictionary that can be edited to change the keybinds. In order to bind an action to multiple keys, you can pack multiple strings into a Python tuple (see the "short_hop" action). Setting "use_short_hop" to False should cause the short hop button to behave like a normal X or Y button. There is probably a better way to do this that is more user friendly, but I haven't worked on that much yet.
 
 ```Python
 use_short_hop = True
 
 key_binds = {
-    "up" : ("w", "backspace"),
+    "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
@@ -76,7 +76,7 @@ key_binds = {
     "x_mod" : "space",
     "y_mod" : "alt",
 
-    "invert_x" : "enter",
+    "invert_x" : "right shift",
 
     "c_up" : "p",
     "c_down" : "'",
@@ -92,8 +92,11 @@ key_binds = {
     "full_hop" : "\\",
 
     "a" : "right windows",
-    "b" : "right alt",
     "z" : "=",
+
+    "b_up" : "backspace",
+    "b_neutral_down" : "right alt",
+    "b_side" : "enter",
 
     "shield" : "]",
     "light_shield" : "tab",

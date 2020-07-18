@@ -9,7 +9,8 @@ from light_shield_logic import LightShieldLogic
 from shield_tilt_logic import ShieldTiltLogic
 from air_dodge_logic import AirDodgeLogic
 from backdash_out_of_crouch_fix import BackdashOutOfCrouchFix
-from safe_grounded_down_b_logic import SafeGroundedDownBLogic
+from a_stick import AStick
+from b_stick import BStick
 from tilt_stick import TiltStick
 from modifier_angle_logic import ModifierAngleLogic
 
@@ -17,7 +18,7 @@ from modifier_angle_logic import ModifierAngleLogic
 use_short_hop = True
 
 key_binds = {
-    "up" : ("w", "backspace"),
+    "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
@@ -25,7 +26,7 @@ key_binds = {
     "x_mod" : "space",
     "y_mod" : "alt",
 
-    "invert_x" : "enter",
+    "invert_x" : "right shift",
 
     "c_up" : "p",
     "c_down" : "'",
@@ -41,8 +42,11 @@ key_binds = {
     "full_hop" : "\\",
 
     "a" : "right windows",
-    "b" : "right alt",
     "z" : "=",
+
+    "b_up" : "backspace",
+    "b_neutral_down" : "right alt",
+    "b_side" : "enter",
 
     "shield" : "]",
     "light_shield" : "tab",
@@ -88,9 +92,10 @@ light_shield_logic = LightShieldLogic()
 shield_tilt_logic = ShieldTiltLogic()
 air_dodge_logic = AirDodgeLogic()
 backdash_out_of_crouch_fix = BackdashOutOfCrouchFix()
+a_stick = AStick()
+b_stick = BStick()
 tilt_stick = TiltStick()
 modifier_angle_logic = ModifierAngleLogic()
-safe_grounded_down_b_logic = SafeGroundedDownBLogic()
 
 
 ls_x_raw = ButtonAxis()
@@ -100,12 +105,13 @@ c_y_raw = ButtonAxis()
 
 
 script_is_disabled = False
+last_direction_is_right = True
 
 while True:
     button_manager.update()
 
     outputs["a"] = buttons["a"].is_active
-    outputs["b"] = buttons["b"].is_active
+    outputs["b"] = False
     outputs["x"] = buttons["full_hop"].is_active
     outputs["y"] = buttons["short_hop"].is_active
     outputs["z"] = buttons["z"].is_active
@@ -182,6 +188,25 @@ while True:
     outputs["ls_x"] = shield_tilt_logic.x_axis_output
     outputs["ls_y"] = shield_tilt_logic.y_axis_output
 
+    a_stick_condition = buttons["tilt"].is_active
+    a_stick.update(
+        a_neutral=buttons["a"].is_active,
+        a_left=buttons["c_left"].is_active and a_stick_condition,
+        a_right=buttons["c_right"].is_active and a_stick_condition,
+        a_down=buttons["c_down"].is_active and a_stick_condition,
+        a_up=buttons["c_up"].is_active and a_stick_condition,
+        ls_x_raw=ls_x_raw.value,
+        ls_y_raw=ls_y_raw.value,
+        ls_x=outputs["ls_x"],
+        ls_y=outputs["ls_y"],
+    )
+    outputs["a"] = a_stick.a_state.is_active
+    outputs["ls_x"] = a_stick.x_axis_output
+    outputs["ls_y"] = a_stick.y_axis_output
+    if a_stick_condition:
+        outputs["c_x"] = 0.0
+        outputs["c_y"] = 0.0
+
     tilt_stick.update(
         tilt_modifier=buttons["tilt"].is_active,
         ls_x=outputs["ls_x"],
@@ -190,17 +215,24 @@ while True:
     outputs["ls_x"] = tilt_stick.x_axis_output
     outputs["ls_y"] = tilt_stick.y_axis_output
 
-    safe_grounded_down_b_logic.update(
-        b=buttons["b"].is_active,
-        down=buttons["down"].is_active,
-        up=buttons["up"].is_active,
+    if ls_x_raw.value > 0.0:
+        last_direction_is_right = True
+    elif ls_x_raw.value < 0.0:
+        last_direction_is_right = False
+
+    b_stick.update(
+        b_neutral=buttons["b_neutral_down"].is_active and not buttons["down"].is_active,
+        b_left=buttons["b_side"].is_active and not last_direction_is_right,
+        b_right=buttons["b_side"].is_active and last_direction_is_right,
+        b_down=buttons["b_neutral_down"].is_active and buttons["down"].is_active,
+        b_up=buttons["b_up"].is_active,
         ls_x_raw=ls_x_raw.value,
-        ls_y_raw=ls_y_raw.value,
         ls_x=outputs["ls_x"],
         ls_y=outputs["ls_y"],
     )
-    outputs["ls_x"] = safe_grounded_down_b_logic.x_axis_output
-    outputs["ls_y"] = safe_grounded_down_b_logic.y_axis_output
+    outputs["b"] = b_stick.b_state.is_active
+    outputs["ls_x"] = b_stick.x_axis_output
+    outputs["ls_y"] = b_stick.y_axis_output
 
     air_dodge_logic.update(
         air_dodge=buttons["air_dodge"].is_active,
@@ -216,10 +248,10 @@ while True:
     outputs["ls_x"] = air_dodge_logic.x_axis_output
     outputs["ls_y"] = air_dodge_logic.y_axis_output
 
-    # Allow for angled smashes when holding down or up on the left stick and pressing tilt.
+    # Allow for angled smashes when holding down or up on the left stick.
     c_diagonal = (buttons["c_left"].is_active or buttons["c_right"].is_active) and (buttons["up"].is_active or buttons["down"].is_active)
-    if c_diagonal and buttons["tilt"].is_active:
-        outputs["c_y"] = ls_y_raw.value * 0.7
+    if c_diagonal and not buttons["tilt"].is_active:
+        outputs["c_y"] = ls_y_raw.value * 0.4
 
     # Allow the script to be toggled on and off with a key.
     if buttons["toggle_script"].just_activated:
