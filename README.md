@@ -62,7 +62,7 @@ The bulk of the tutorial is probably best described by explaining how to perform
 
 ## Keybinds
 
-In order to change keybinds, you can open up the "run.py" file. Near the top of that file, there is a Python dictionary that can be edited to change the keybinds. In order to bind an action to multiple keys, you can pack multiple strings into a Python tuple (see the "up" action). There is probably a better way to do this that is more user friendly, but I haven't worked on that much yet.
+In order to change keybinds, you can open up the "run.py" file. Near the top of that file, there is a Python dictionary that can be edited to change the keybinds. In order to bind an action to multiple keys, you can pack multiple strings into a Python tuple (see the "up" action). Setting "use_short_hop" to False should cause the short hop button to behave like a normal X or Y button. There is probably a better way to do this that is more user friendly, but I haven't worked on that much yet.
 
 ```Python
 use_short_hop = True
