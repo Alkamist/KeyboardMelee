@@ -60,6 +60,51 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **D Pad**: Use the G, V, B, and N keys.
 - **Stick Angles**: I haven't fully worked out what I want to do with this, but for now, Space Bar and Left Alt will modify the angles made with WASD to allow for the steepest and most shallow angles.
 
+## Keybinds
+
+In order to change keybinds, you can open up the "run.py" file. Near the top of that file, there is a Python dictionary that can be edited to change the keybinds. In order to bind an action to multiple keys, you can pack multiple strings into a Python tuple (see the "up" action). There is probably a better way to do this that is more user friendly, but I haven't worked on that much yet.
+
+```Python
+use_short_hop = True
+
+key_binds = {
+    "up" : ("w", "backspace"),
+    "down" : "s",
+    "right" : "d",
+    "left" : "a",
+    "tilt" : "caps lock",
+    "x_mod" : "space",
+    "y_mod" : "alt",
+
+    "invert_x" : "enter",
+
+    "c_up" : "p",
+    "c_down" : "'",
+    "c_right" : "/",
+    "c_left" : "l",
+
+    "d_up" : "g",
+    "d_down" : "b",
+    "d_right" : "n",
+    "d_left" : "v",
+
+    "short_hop" : ("[", "-"),
+    "full_hop" : "\\",
+
+    "a" : "right windows",
+    "b" : "right alt",
+    "z" : "=",
+
+    "shield" : "]",
+    "light_shield" : "tab",
+    "air_dodge" : ";",
+
+    "start" : "5",
+
+    "toggle_script" : "8",
+}
+```
+
 ## Issues
 
 - The script should block the keys it is using along with some others while it is running, however there are some annoying consequences of using the Right Windows key. Blocking that key doesn't seem to block some Windows shortcuts, and there is one in particular that is super annoying, which is Windows + L, which will log you out of your PC. You can disable this shortcut with a [registry edit](https://www.howtogeek.com/howto/windows-vista/disableenable-lock-workstation-functionality-windows-l/).
