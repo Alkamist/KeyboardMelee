@@ -34,7 +34,7 @@ class BackdashOutOfCrouchFix(object):
 
         if self._delay_backdash:
             self.x_axis_output = 0.0
-            if time.perf_counter() - self._backdash_time >= 0.1:
+            if time.perf_counter() - self._backdash_time >= 0.035:
                 self._delay_backdash = False
         else:
             self.x_axis_output = ls_x

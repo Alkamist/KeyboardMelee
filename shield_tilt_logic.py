@@ -8,7 +8,7 @@ class ShieldTiltLogic(object):
         self.x_axis_output = 0.0
         self.y_axis_output = 0.0
 
-        self._tilt_stick = TiltStick(shield_drop_level, minimum_active_value)
+        self._tilt_stick = TiltStick(shield_drop_level, minimum_active_value, True)
 
     def update(self, shield, ls_x, ls_y):
         self._tilt_stick.update(shield, ls_x, ls_y)

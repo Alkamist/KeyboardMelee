@@ -17,14 +17,53 @@ from modifier_angle_logic import ModifierAngleLogic
 
 use_short_hop = True
 
+#key_binds = {
+#    "up" : "w",
+#    "down" : "s",
+#    "right" : "d",
+#    "left" : "a",
+#    "tilt" : "caps lock",
+#    "x_mod" : "space",
+#    "y_mod" : "alt",
+#
+#    "invert_x" : "right shift",
+#
+#    "c_up" : "p",
+#    "c_down" : "'",
+#    "c_right" : "/",
+#    "c_left" : "l",
+#
+#    "d_up" : "g",
+#    "d_down" : "b",
+#    "d_right" : "n",
+#    "d_left" : "v",
+#
+#    "short_hop" : ("[", "-"),
+#    "full_hop" : "\\",
+#
+#    "a" : "right windows",
+#    "z" : "=",
+#
+#    "b_up" : "backspace",
+#    "b_neutral_down" : "right alt",
+#    "b_side" : "enter",
+#
+#    "shield" : "]",
+#    "light_shield" : "tab",
+#    "air_dodge" : ";",
+#
+#    "start" : "5",
+#
+#    "toggle_script" : "8",
+#}
 key_binds = {
     "up" : "w",
     "down" : "s",
     "right" : "d",
     "left" : "a",
     "tilt" : "caps lock",
-    "x_mod" : "space",
-    "y_mod" : "alt",
+    "x_mod" : "alt",
+    "y_mod" : "shift",
 
     "invert_x" : "right shift",
 
@@ -33,23 +72,25 @@ key_binds = {
     "c_right" : "/",
     "c_left" : "l",
 
+    "charge_smash" : "tab",
+
     "d_up" : "g",
     "d_down" : "b",
     "d_right" : "n",
     "d_left" : "v",
 
-    "short_hop" : ("[", "-"),
+    "short_hop" : "[",
     "full_hop" : "\\",
 
     "a" : "right windows",
-    "z" : "=",
+    "z" : "]",
 
     "b_up" : "backspace",
     "b_neutral_down" : "right alt",
     "b_side" : "enter",
 
-    "shield" : "]",
-    "light_shield" : "tab",
+    "shield" : "space",
+    "light_shield" : "-",
     "air_dodge" : ";",
 
     "start" : "5",
@@ -139,6 +180,10 @@ while True:
     outputs["c_y_raw"] = c_y_raw.value
     outputs["c_y"] = c_y_raw.value
 
+    if buttons["charge_smash"].is_active:
+        outputs["a"] = outputs["a"] or buttons["c_left"].is_active or buttons["c_right"].is_active \
+                                    or buttons["c_down"].is_active or buttons["c_up"].is_active
+
     if buttons["invert_x"].is_active:
         outputs["ls_x_raw"] = -outputs["ls_x_raw"]
         outputs["ls_x"] = -outputs["ls_x"]
@@ -166,7 +211,8 @@ while True:
         ls_x=outputs["ls_x"],
     )
     if not (buttons["full_hop"].is_active or buttons["short_hop"].is_active or buttons["z"].is_active or buttons["shield"].is_active \
-            or buttons["air_dodge"].is_active or buttons["a"].is_active):
+            or buttons["air_dodge"].is_active or buttons["a"].is_active or buttons["b_up"].is_active or buttons["b_neutral_down"].is_active \
+            or buttons["b_side"].is_active):
         outputs["ls_x"] = backdash_out_of_crouch_fix.x_axis_output
 
     modifier_angle_logic.update(
@@ -200,7 +246,7 @@ while True:
         ls_x=outputs["ls_x"],
         ls_y=outputs["ls_y"],
     )
-    outputs["a"] = a_stick.a_state.is_active
+    outputs["a"] = outputs["a"] or a_stick.a_state.is_active
     outputs["ls_x"] = a_stick.x_axis_output
     outputs["ls_y"] = a_stick.y_axis_output
     if a_stick_condition:

@@ -49,11 +49,12 @@ class AxisTiltTracker(object):
 
 
 class TiltStick(object):
-    def __init__(self, tilt_level=0.65, minimum_active_value=0.2875):
+    def __init__(self, tilt_level=0.65, minimum_active_value=0.2875, tilt_on_activation=False):
         self.x_axis_output = 0.0
         self.y_axis_output = 0.0
         self.tilt_level = tilt_level
         self.minimum_active_value = minimum_active_value
+        self.tilt_on_activation = tilt_on_activation
 
         self._tilt_state = State()
         self._x_axis = AxisTiltTracker(self.minimum_active_value)
@@ -66,8 +67,10 @@ class TiltStick(object):
         self._tilt_state.is_active = tilt_modifier
         self._tilt_state.update()
 
+        external_tilt_state = (self.tilt_on_activation and self._tilt_state.just_activated) or self._tilt_state.just_deactivated
 
-        self._x_axis.update(ls_x, self._tilt_state.just_deactivated, tilt_modifier)
+
+        self._x_axis.update(ls_x, external_tilt_state, tilt_modifier)
 
         abs_ls_x = abs(ls_x)
         if self._x_axis.is_tilting and abs_ls_x > self.tilt_level:
@@ -76,7 +79,7 @@ class TiltStick(object):
             self.y_axis_output = bipolar_max(ls_y * scale_factor, self.minimum_active_value)
 
 
-        self._y_axis.update(self.y_axis_output, self._tilt_state.just_deactivated, tilt_modifier)
+        self._y_axis.update(self.y_axis_output, external_tilt_state, tilt_modifier)
 
         abs_ls_y = abs(self.y_axis_output)
         if self._y_axis.is_tilting and abs_ls_y > self.tilt_level:
