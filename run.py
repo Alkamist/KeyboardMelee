@@ -17,45 +17,6 @@ from modifier_angle_logic import ModifierAngleLogic
 
 use_short_hop = True
 
-#key_binds = {
-#    "up" : "w",
-#    "down" : "s",
-#    "right" : "d",
-#    "left" : "a",
-#    "tilt" : "caps lock",
-#    "x_mod" : "space",
-#    "y_mod" : "alt",
-#
-#    "invert_x" : "right shift",
-#
-#    "c_up" : "p",
-#    "c_down" : "'",
-#    "c_right" : "/",
-#    "c_left" : "l",
-#
-#    "d_up" : "g",
-#    "d_down" : "b",
-#    "d_right" : "n",
-#    "d_left" : "v",
-#
-#    "short_hop" : ("[", "-"),
-#    "full_hop" : "\\",
-#
-#    "a" : "right windows",
-#    "z" : "=",
-#
-#    "b_up" : "backspace",
-#    "b_neutral_down" : "right alt",
-#    "b_side" : "enter",
-#
-#    "shield" : "]",
-#    "light_shield" : "tab",
-#    "air_dodge" : ";",
-#
-#    "start" : "5",
-#
-#    "toggle_script" : "8",
-#}
 key_binds = {
     "up" : "w",
     "down" : "s",
@@ -63,7 +24,7 @@ key_binds = {
     "left" : "a",
     "tilt" : "caps lock",
     "x_mod" : "alt",
-    "y_mod" : "shift",
+    "y_mod" : "space",
 
     "invert_x" : "right shift",
 
@@ -79,18 +40,18 @@ key_binds = {
     "d_right" : "n",
     "d_left" : "v",
 
-    "short_hop" : "[",
+    "short_hop" : ("[", "-"),
     "full_hop" : "\\",
 
     "a" : "right windows",
-    "z" : "]",
+    "z" : "=",
 
     "b_up" : "backspace",
     "b_neutral_down" : "right alt",
     "b_side" : "enter",
 
-    "shield" : "space",
-    "light_shield" : "-",
+    "shield" : "]",
+    "light_shield" : "shift",
     "air_dodge" : ";",
 
     "start" : "5",

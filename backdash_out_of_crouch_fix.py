@@ -26,9 +26,6 @@ class BackdashOutOfCrouchFix(object):
             self._delay_backdash = True
             self._backdash_time = time.perf_counter()
 
-        #disable_if = buttons["a"].is_active or buttons["z"].is_active or buttons["air_dodge"].is_active \
-        #          or buttons["shield"].is_active or buttons["short_hop"].is_active or buttons["full_hop"].is_active
-
         if self._down_state.just_deactivated:
             self._delay_backdash = False
 
