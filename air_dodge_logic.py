@@ -7,8 +7,8 @@ class AirDodgeLogic(object):
     def __init__(self):
         self.x_axis_output = 0.0
         self.y_axis_output = 0.0
-        self.x_level_long = 0.9375
-        self.y_level_long = -0.3125
+        self.x_level_long = 0.9250
+        self.y_level_long = -0.3500
         self.x_level_medium = 0.8125
         self.y_level_medium = -0.5750
         self.x_level_short = 0.5000

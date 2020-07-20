@@ -141,10 +141,6 @@ while True:
     outputs["c_y_raw"] = c_y_raw.value
     outputs["c_y"] = c_y_raw.value
 
-    if buttons["charge_smash"].is_active:
-        outputs["a"] = outputs["a"] or buttons["c_left"].is_active or buttons["c_right"].is_active \
-                                    or buttons["c_down"].is_active or buttons["c_up"].is_active
-
     if buttons["invert_x"].is_active:
         outputs["ls_x_raw"] = -outputs["ls_x_raw"]
         outputs["ls_x"] = -outputs["ls_x"]
@@ -207,7 +203,7 @@ while True:
         ls_x=outputs["ls_x"],
         ls_y=outputs["ls_y"],
     )
-    outputs["a"] = outputs["a"] or a_stick.a_state.is_active
+    outputs["a"] = a_stick.a_state.is_active
     outputs["ls_x"] = a_stick.x_axis_output
     outputs["ls_y"] = a_stick.y_axis_output
     if a_stick_condition:
@@ -254,6 +250,10 @@ while True:
     )
     outputs["ls_x"] = air_dodge_logic.x_axis_output
     outputs["ls_y"] = air_dodge_logic.y_axis_output
+
+    if buttons["charge_smash"].is_active:
+        outputs["a"] = outputs["a"] or buttons["c_left"].is_active or buttons["c_right"].is_active \
+                                    or buttons["c_down"].is_active or buttons["c_up"].is_active
 
     # Allow for angled smashes when holding down or up on the left stick.
     c_diagonal = (buttons["c_left"].is_active or buttons["c_right"].is_active) and (buttons["up"].is_active or buttons["down"].is_active)
