@@ -34,13 +34,14 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Shield**: Use your ring finger to hold the ] key.
 - **Shield Drop**: Hold shield and press the S key.
 - **Tilt Shield**: Hold Caps Lock and use WASD to tilt your shield without shield dropping on a platform.
-- **Light Shield**: Press Tab while holding Shield to toggle Light Shield.
+- **Light Shield**: Press Shift while holding Shield to toggle Light Shield.
 - **Wavedash**: Jump with your middle finger on the [ key, and then use your right index finger to press the ; key while holding a direction with WASD. Holding A or D will result in a max distance wavedash in the respective direction. Holding diagonally downward with WASD will result in a shorter wavedash. Holding Caps Lock while doing a wavedash will shorten the distance. Holding no direction will result in a wavedash straight downward.
 - **Grab**: Use your ring finger to press the = key. The - key will also short hop to allow for comfortable jump cancel grabs.
 - **Up Smash/Up Aerial**: Use your index finger to press the P Key.
 - **Down Smash/Down Aerial**: Use your index or middle finger to press the ' Key.
 - **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W to angle it.
 - **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W to angle it.
+- **Charged Smashes**: If you hold the Tab key before using a smash attack, it will charge the smash.
 - **Jab/Neutral Aerial**: Use your right thumb to press the Right Windows Key. Note that if you don't have a Right Windows key on your keyboard, you might need to do some button rebinds to put this somewhere else.
 - **Up Tilt**: Hold Caps Lock and and press the P key.
 - **Down Tilt**: Hold Caps Lock and and press the ' key.
@@ -73,8 +74,8 @@ key_binds = {
     "right" : "d",
     "left" : "a",
     "tilt" : "caps lock",
-    "x_mod" : "space",
-    "y_mod" : "alt",
+    "x_mod" : "alt",
+    "y_mod" : "space",
 
     "invert_x" : "right shift",
 
@@ -82,6 +83,8 @@ key_binds = {
     "c_down" : "'",
     "c_right" : "/",
     "c_left" : "l",
+
+    "charge_smash" : "tab",
 
     "d_up" : "g",
     "d_down" : "b",
@@ -99,7 +102,7 @@ key_binds = {
     "b_side" : "enter",
 
     "shield" : "]",
-    "light_shield" : "tab",
+    "light_shield" : "shift",
     "air_dodge" : ";",
 
     "start" : "5",
