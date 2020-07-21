@@ -11,7 +11,7 @@ class ShieldTiltLogic(object):
         self._tilt_stick = TiltStick(shield_drop_level, minimum_active_value, True)
 
     def update(self, shield, ls_x, ls_y):
-        self._tilt_stick.update(shield, ls_x, ls_y)
+        self._tilt_stick.update(shield, False, ls_x, ls_y)
 
         if shield:
             self.x_axis_output = self._tilt_stick.x_axis_output

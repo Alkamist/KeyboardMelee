@@ -213,6 +213,7 @@ while True:
 
     tilt_stick.update(
         tilt_modifier=buttons["tilt"].is_active,
+        hold_tilt=buttons["tilt"].is_active and buttons["shield"].is_active,
         ls_x=outputs["ls_x"],
         ls_y=outputs["ls_y"],
     )
