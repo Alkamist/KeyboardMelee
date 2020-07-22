@@ -21,7 +21,7 @@ class BStick(object):
         self._activation_time = 0.0
         self._axis_hold_duration = 0.050
 
-    def update(self, b_neutral, b_left, b_right, b_down, b_up, ls_x_raw, ls_x, ls_y):
+    def update(self, b_neutral, b_left, b_right, b_down, b_up, shield, ls_x_raw, ls_y_raw, ls_x, ls_y):
         self.x_axis_output = ls_x
         self.y_axis_output = ls_y
 
@@ -30,7 +30,10 @@ class BStick(object):
         # Delay the b press by one frame if doing up b.
         if self._b_up.just_activated:
             self._activation_time = time.perf_counter()
-            self.b_state.delay = 0.017
+            if ls_y_raw <= 0.6000 or shield:
+                self.b_state.delay = 0.017
+            else:
+                self.b_state.delay = 0.0
             self._axis_hold_duration = 0.050
 
         if self._b_down.just_activated \

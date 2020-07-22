@@ -231,7 +231,9 @@ while True:
         b_right=buttons["b_side"].is_active and last_direction_is_right,
         b_down=buttons["b_neutral_down"].is_active and buttons["down"].is_active,
         b_up=buttons["b_up"].is_active,
+        shield=buttons["shield"].is_active,
         ls_x_raw=ls_x_raw.value,
+        ls_y_raw=ls_y_raw.value,
         ls_x=outputs["ls_x"],
         ls_y=outputs["ls_y"],
     )
