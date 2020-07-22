@@ -46,16 +46,20 @@ class ButtonManager(object):
         for name in self.key_binds:
             self.buttons[name] = State()
 
-        self.key_binds_reversed = {}
+        self.key_action_lists = {}
         for bind_name, bind_value in self.key_binds.items():
             if isinstance(bind_value, tuple):
                 for i in range(len(bind_value)):
-                    self.key_binds_reversed[bind_value[i]] = bind_name
+                    if not (bind_value[i] in self.key_action_lists):
+                        self.key_action_lists[bind_value[i]] = []
+                    self.key_action_lists[bind_value[i]].append(bind_name)
             else:
-                self.key_binds_reversed[bind_value] = bind_name
+                if not (bind_value in self.key_action_lists):
+                    self.key_action_lists[bind_value] = []
+                self.key_action_lists[bind_value].append(bind_name)
 
         self.key_is_pressed = {}
-        for key_name in self.key_binds_reversed:
+        for key_name in self.key_action_lists:
             self.key_is_pressed[key_name] = False
 
         self.parsed_binds = []
@@ -78,6 +82,8 @@ class ButtonManager(object):
             keyboard.on_press_key(key, self._on_press_key, True)
             keyboard.on_release_key(key, self._on_release_key, True)
 
+        keyboard.block_key("escape")
+        keyboard.block_key("tab")
         keyboard.block_key(".") # Prevent windows emoji menu.
         keyboard.block_key("=") # Prevent windows magnifier.
         keyboard.block_key("e") # Prevent windows explorer.
@@ -92,24 +98,25 @@ class ButtonManager(object):
     def _on_press_key(self, key):
         key_name = get_base_key(key.name)
 
-        if key_name in self.key_binds_reversed:
+        if key_name in self.key_action_lists:
             self.key_is_pressed[key_name] = True
-            bind_name = self.key_binds_reversed[key_name]
-            self.buttons[bind_name].is_active = True
+            key_action_list = self.key_action_lists[key_name]
+            for action in key_action_list:
+                self.buttons[action].is_active = True
 
     def _on_release_key(self, key):
         key_name = get_base_key(key.name)
 
-        if key_name in self.key_binds_reversed:
-            bind_name = self.key_binds_reversed[key_name]
+        if key_name in self.key_action_lists:
+            key_action_list = self.key_action_lists[key_name]
+            for action in key_action_list:
+                another_same_bind_is_pressed = False
+                if isinstance(self.key_binds[action], tuple):
+                    for physical_key in self.key_binds[action]:
+                        if key_name != physical_key and self.key_is_pressed[physical_key]:
+                            another_same_bind_is_pressed = True
 
-            another_same_bind_is_pressed = False
-            if isinstance(self.key_binds[bind_name], tuple):
-                for physical_key in self.key_binds[bind_name]:
-                    if key_name != physical_key and self.key_is_pressed[physical_key]:
-                        another_same_bind_is_pressed = True
-
-            if not another_same_bind_is_pressed:
-                self.buttons[bind_name].is_active = False
+                if not another_same_bind_is_pressed:
+                    self.buttons[action].is_active = False
 
             self.key_is_pressed[key_name] = False

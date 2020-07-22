@@ -41,7 +41,7 @@ The bulk of the tutorial is probably best described by explaining how to perform
 - **Down Smash/Down Aerial**: Use your index or middle finger to press the ' Key.
 - **Left Smash/Left Aerial**: Use your index finger to press the L Key, use S or W to angle it.
 - **Right Smash/Right Aerial**: Use your index finger to press the / Key, use S or W to angle it.
-- **Charged Smashes**: If you hold the Tab key before using a smash attack, it will charge the smash.
+- **Charged Smashes**: If you hold the Space Bar before using a smash attack, it will charge the smash.
 - **Jab/Neutral Aerial**: Use your right thumb to press the Right Windows Key. Note that if you don't have a Right Windows key on your keyboard, you might need to do some button rebinds to put this somewhere else.
 - **Up Tilt**: Hold Caps Lock and and press the P key.
 - **Down Tilt**: Hold Caps Lock and and press the ' key.
@@ -63,7 +63,7 @@ The bulk of the tutorial is probably best described by explaining how to perform
 
 ## Keybinds
 
-In order to change keybinds, you can open up the "run.py" file. Near the top of that file, there is a Python dictionary that can be edited to change the keybinds. In order to bind an action to multiple keys, you can pack multiple strings into a Python tuple (see the "short_hop" action). Setting "use_short_hop" to False should cause the short hop button to behave like a normal X or Y button. There is probably a better way to do this that is more user friendly, but I haven't worked on that much yet.
+In order to change keybinds, you can open up the "run.py" file. Near the top of that file, there is a Python dictionary that can be edited to change the keybinds. In order to bind an action to multiple keys, you can pack multiple strings into a Python tuple (see the "short_hop" action). It should also be possible to bind multiple actions to a single key (see the "y_mod" and "light_shield" actions). Setting "use_short_hop" to False should cause the short hop button to behave like a normal X or Y button. There is probably a better way to do this that is more user friendly, but I haven't worked on that much yet.
 
 ```Python
 use_short_hop = True
@@ -102,7 +102,7 @@ key_binds = {
     "b_side" : "enter",
 
     "shield" : "]",
-    "light_shield" : "shift",
+    "light_shield" : "space",
     "air_dodge" : ";",
 
     "start" : "5",

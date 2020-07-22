@@ -51,7 +51,7 @@ key_binds = {
     "b_side" : "enter",
 
     "shield" : "]",
-    "light_shield" : "shift",
+    "light_shield" : "space",
     "air_dodge" : ";",
 
     "start" : "5",
